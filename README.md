@@ -1,1 +1,1 @@
-# Institutes_Managment_App
+# Institute_Managment_App
