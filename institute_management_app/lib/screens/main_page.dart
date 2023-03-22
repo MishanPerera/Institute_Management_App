@@ -4,12 +4,12 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:institute_management_app/models/menu_page_model.dart';
 import 'package:institute_management_app/screens/menu_page.dart';
 
-import 'package:institute_management_app/screens/pages/time_table_screen.dart';
-import 'package:institute_management_app/screens/pages/notice_screen.dart';
-import 'package:institute_management_app/screens/pages/sample_page_2.dart';
-import 'package:institute_management_app/screens/pages/sample_page_3.dart';
-import 'package:institute_management_app/screens/pages/sample_page_4.dart';
-import 'package:institute_management_app/screens/pages/sample_page_5.dart';
+import 'package:institute_management_app/screens/time_table_screen.dart';
+import 'package:institute_management_app/screens/notice_screen.dart';
+import 'package:institute_management_app/screens/sample_page_2.dart';
+import 'package:institute_management_app/screens/sample_page_3.dart';
+import 'package:institute_management_app/screens/sample_page_4.dart';
+import 'package:institute_management_app/screens/sample_page_5.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
