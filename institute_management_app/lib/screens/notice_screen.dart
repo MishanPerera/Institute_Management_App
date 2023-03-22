@@ -107,6 +107,31 @@ class _NoticeState extends State<Notice> {
                     SizedBox(
                       height: 10,
                     ),
+                    description(),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    label("Category"),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Wrap(
+                      children: [
+                        chipData("Exam", 0xff2664fa),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        chipData("Holiday", 0xff2bc8d9),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        chipData("Other", 0xff6557ff),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    button(),
                   ],
                 ),
               ),
@@ -127,18 +152,49 @@ class _NoticeState extends State<Notice> {
     );
   }
 
+  Widget button() {
+    return Container(
+      height: 45,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        gradient: LinearGradient(
+          colors: [
+            Color.fromARGB(255, 125, 23, 242),
+            Color.fromARGB(255, 96, 12, 148),
+          ],
+        ),
+      ),
+      child: Center(
+        child: Text(
+          "ADD NOTICE",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget description() {
     return Container(
-      height: 40,
+      height: 100,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: Color(0xff2a2e3d),
         borderRadius: BorderRadius.circular(8),
       ),
       child: TextFormField(
+        style: TextStyle(
+          color: Colors.grey,
+          fontSize: 17,
+        ),
+        maxLines: null,
         decoration: InputDecoration(
             border: InputBorder.none,
-            hintText: "Notice Title",
+            hintText: "Description of the Notice",
             hintStyle: TextStyle(
               color: Colors.grey,
               fontSize: 16.5,
@@ -182,6 +238,10 @@ class _NoticeState extends State<Notice> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: TextFormField(
+        style: TextStyle(
+          color: Colors.grey,
+          fontSize: 17,
+        ),
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: "Notice Title",
