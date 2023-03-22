@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:quickalert/quickalert.dart';
 
-import '../../main.dart';
+import '../main.dart';
 
 class TimeTable extends StatefulWidget {
   const TimeTable({super.key, required this.title});
