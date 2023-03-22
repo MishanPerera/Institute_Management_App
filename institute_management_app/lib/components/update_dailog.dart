@@ -10,8 +10,8 @@ class UpdateDialogWidget extends StatefulWidget {
   final String grade;
   final String subject;
   final List<String> days;
-  final TimeOfDay startTime;
-  final TimeOfDay endTime;
+  final String startTime;
+  final String endTime;
 
   const UpdateDialogWidget({
     super.key,
@@ -34,8 +34,8 @@ class UpdateDialogWidget extends StatefulWidget {
       String grade,
       String subject,
       List<String> days,
-      TimeOfDay startTime,
-      TimeOfDay endTime) async {
+      String startTime,
+      String endTime) async {
     await showDialog(
       context: context,
       builder: (context) => UpdateDialogWidget(
@@ -69,17 +69,19 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
     "Chemistry"
   ];
   final List<DayInWeek> _days = [
-    DayInWeek("Sun"),
-    DayInWeek("Mon"),
-    DayInWeek("Tue"),
-    DayInWeek("Wed"),
-    DayInWeek("Thu"),
-    DayInWeek("Fri"),
-    DayInWeek("Sat"),
+    DayInWeek("Sun", isSelected: false),
+    DayInWeek("Mon", isSelected: false),
+    DayInWeek("Tue", isSelected: false),
+    DayInWeek("Wed", isSelected: false),
+    DayInWeek("Thu", isSelected: false),
+    DayInWeek("Fri", isSelected: false),
+    DayInWeek("Sat", isSelected: false),
   ];
 
   void handleOnSelect(List<String> values) {
-    days = values.map((val) => val).toList();
+    setState(() {
+      days = values.map((val) => val).toList();
+    });
   }
 
   @override
@@ -87,33 +89,22 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
     super.initState();
     name = widget.name;
     subject = widget.subject;
-    startTime = widget.startTime;
-    endTime = widget.endTime;
+    grade = widget.grade;
+    startTime = TimeOfDay(
+        hour: int.parse(widget.startTime.split(':')[0]),
+        minute: int.parse(widget.startTime.split(':')[1]));
+    endTime = TimeOfDay(
+        hour: int.parse(widget.endTime.split(':')[0]),
+        minute: int.parse(widget.endTime.split(':')[1]));
     days = widget.days;
 
     for (var day in _days) {
-      if (widget.days.contains('Sun')) {
-        day.isSelected = true;
-      } else if (widget.days.contains('Mon')) {
-        day.isSelected = true;
-      } else if (widget.days.contains('Tue')) {
-        day.isSelected = true;
-      } else if (widget.days.contains('Wed')) {
-        day.isSelected = true;
-      } else if (widget.days.contains('Thu')) {
-        day.isSelected = true;
-      } else if (widget.days.contains('Fri')) {
-        day.isSelected = true;
-      } else if (widget.days.contains('Sat')) {
+      if (days.contains(day.dayName)) {
         day.isSelected = true;
       }
     }
+    super.initState();
   }
-
-  // void handleOnSelect(List<String> values) {
-  //   days = values.map((val) => val).toList();
-  //   print(days);
-  // }
 
   Future<TimeOfDay> selectTime(
       BuildContext context, TimeOfDay initialTime) async {
@@ -332,8 +323,8 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
                 'grade': int.parse(grade),
                 'subject': subject,
                 'days': days,
-                'startTime': startTime,
-                'endTime': endTime,
+                'startTime': '${startTime.hour}:${startTime.minute}',
+                'endTime': '${endTime.hour}:${endTime.minute}',
               });
 
               const snackBar = SnackBar(

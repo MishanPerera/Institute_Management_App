@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
-
 class TimeTable {
   String id;
   String name;
   int grade;
   String subject;
   List<String> days;
-  TimeOfDay startTime;
-  TimeOfDay endTime;
+  String startTime;
+  String endTime;
 
   TimeTable(
       {required this.id,
@@ -28,13 +26,13 @@ class TimeTable {
         'endTime': endTime,
       };
 
-  factory TimeTable.fromJson(key, Map<String, dynamic> json) {
+  factory TimeTable.fromJson(Map<String, dynamic> json) {
     return TimeTable(
-        id: key,
+        id: json['id'],
         name: json['name'],
         subject: json['subject'],
         grade: json['grade'],
-        days: json['days'],
+        days: List<String>.from(json['days']),
         startTime: json['startTime'],
         endTime: json['endTime']);
   }
