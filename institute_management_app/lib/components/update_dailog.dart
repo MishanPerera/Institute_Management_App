@@ -1,6 +1,7 @@
 import 'package:day_picker/day_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:institute_management_app/models/time_table_model.dart';
+import 'package:institute_management_app/reusable_widgets/label_heading_widget.dart';
 
 import '../utils/database.dart';
 
@@ -134,6 +135,7 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
           key: formKey,
           child: Column(
             children: [
+              const LabelHeading(label: "Teacher Name:"),
               Container(
                 margin: const EdgeInsets.all(8.0),
                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
@@ -165,7 +167,7 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16.0),
+              const LabelHeading(label: "Grade:"),
               Container(
                 margin: const EdgeInsets.all(8.0),
                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
@@ -197,9 +199,7 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 16,
-              ),
+              const LabelHeading(label: "Subject:"),
               Container(
                 margin: const EdgeInsets.all(8.0),
                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
@@ -231,8 +231,9 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
                   ),
                 ),
               ),
+              const LabelHeading(label: "Days:"),
               const SizedBox(
-                height: 16,
+                height: 8,
               ),
               SelectWeekDays(
                 fontSize: 14,
@@ -251,8 +252,9 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
                 onSelect: (values) => handleOnSelect(values),
               ),
               const SizedBox(
-                height: 16,
+                height: 12,
               ),
+              const LabelHeading(label: "Start Time:"),
               Row(
                 children: [
                   Expanded(
@@ -276,9 +278,7 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 16,
-              ),
+              const LabelHeading(label: "End Time:"),
               Row(
                 children: [
                   Expanded(

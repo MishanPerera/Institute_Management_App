@@ -47,6 +47,7 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyAUhj3Zm77ABcQs8Pw8dmQZUc8nZQm_SEA',
     appId: '1:331046206824:web:761fa5e299ad602aa4aadd',
     messagingSenderId: '331046206824',
+    databaseURL: "https://institute-mobile-15782-default-rtdb.firebaseio.com",
     projectId: 'institute-mobile-15782',
     authDomain: 'institute-mobile-15782.firebaseapp.com',
     storageBucket: 'institute-mobile-15782.appspot.com',
@@ -55,6 +56,8 @@ class DefaultFirebaseOptions {
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC09AfDi6ITwitwiOMxhz_xoMiQshrlvp8',
     appId: '1:331046206824:android:fbd6c0a63f8849baa4aadd',
+    authDomain: "institute-mobile-15782.firebaseapp.com",
+    databaseURL: "https://institute-mobile-15782-default-rtdb.firebaseio.com",
     messagingSenderId: '331046206824',
     projectId: 'institute-mobile-15782',
     storageBucket: 'institute-mobile-15782.appspot.com',
@@ -63,20 +66,26 @@ class DefaultFirebaseOptions {
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAJxddtZswuFht69JD8g7wa2y0pRNd7G2c',
     appId: '1:331046206824:ios:2354bf20038cdf6da4aadd',
+    authDomain: "institute-mobile-15782.firebaseapp.com",
+    databaseURL: "https://institute-mobile-15782-default-rtdb.firebaseio.com",
     messagingSenderId: '331046206824',
     projectId: 'institute-mobile-15782',
     storageBucket: 'institute-mobile-15782.appspot.com',
-    iosClientId: '331046206824-odkln52igmjk9bqs7m6adi6cdp26qevq.apps.googleusercontent.com',
+    iosClientId:
+        '331046206824-odkln52igmjk9bqs7m6adi6cdp26qevq.apps.googleusercontent.com',
     iosBundleId: 'com.example.instituteManagementApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyAJxddtZswuFht69JD8g7wa2y0pRNd7G2c',
     appId: '1:331046206824:ios:2354bf20038cdf6da4aadd',
+    authDomain: "institute-mobile-15782.firebaseapp.com",
+    databaseURL: "https://institute-mobile-15782-default-rtdb.firebaseio.com",
     messagingSenderId: '331046206824',
     projectId: 'institute-mobile-15782',
     storageBucket: 'institute-mobile-15782.appspot.com',
-    iosClientId: '331046206824-odkln52igmjk9bqs7m6adi6cdp26qevq.apps.googleusercontent.com',
+    iosClientId:
+        '331046206824-odkln52igmjk9bqs7m6adi6cdp26qevq.apps.googleusercontent.com',
     iosBundleId: 'com.example.instituteManagementApp',
   );
 }

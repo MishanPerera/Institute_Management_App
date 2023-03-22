@@ -1,4 +1,5 @@
 // import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:institute_management_app/models/time_table_model.dart';
 import 'package:logger/logger.dart';
@@ -37,12 +38,9 @@ void addTimeTable(String name, int grade, String subject, List<String> days,
 Stream<List<TimeTable>> getTimeTables() async* {
   try {
     // Return a stream of documents that belong to the current user
-    yield* FirebaseFirestore.instance.collection('timeTables').snapshots().map(
-        (snapshots) => snapshots.docs
-            .map((doc) => TimeTable.fromJson(doc.data()))
-            .toList());
-
-    //     {
+    // final DatabaseReference ref =
+    //     FirebaseDatabase.instance.ref().child('timeTables');
+    // ref.onValue.map((event) {
     //   List<TimeTable> timeTables = [];
     //   // Convert the data snapshot to a Map
     //   Map<dynamic, dynamic> snapshotMap =
@@ -54,6 +52,12 @@ Stream<List<TimeTable>> getTimeTables() async* {
     //   // Return the list of TimeTable objects as the result of the stream
     //   return timeTables;
     // });
+
+    // ----- FireStore-----
+    yield* FirebaseFirestore.instance.collection('timeTables').snapshots().map(
+        (snapshots) => snapshots.docs
+            .map((doc) => TimeTable.fromJson(doc.data()))
+            .toList());
   } catch (e) {
     logger.e('Error fetching favourites: $e');
     yield [];

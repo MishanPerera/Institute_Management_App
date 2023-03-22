@@ -63,7 +63,7 @@ class _TimeTableScreenState extends State<TimeTableScreen> {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (snapshot.hasData) {
+          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
             List<TimeTable> timeTables = snapshot.data!;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 0),
