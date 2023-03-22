@@ -1,3 +1,4 @@
+import 'package:day_picker/day_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:institute_management_app/models/time_table_model.dart';
 
@@ -6,7 +7,7 @@ import '../utils/database.dart';
 class UpdateDialogWidget extends StatefulWidget {
   final TimeTable timeTable;
   final String name;
-  final int grade;
+  final String grade;
   final String subject;
   final List<String> days;
   final TimeOfDay startTime;
@@ -30,7 +31,7 @@ class UpdateDialogWidget extends StatefulWidget {
       BuildContext context,
       TimeTable timeTable,
       String name,
-      int grade,
+      String grade,
       String subject,
       List<String> days,
       TimeOfDay startTime,
@@ -53,27 +54,60 @@ class UpdateDialogWidget extends StatefulWidget {
 class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
   final formKey = GlobalKey<FormState>();
   late String name;
-  late int grade;
-  late String taskSubtitle;
-  final nameList = ['Joseph', 'Stalin', 'Henry', 'Kane', 'Richardson'];
-  final List<int> gradeList = [12, 13];
-  final List<String> subjectList = [
+  late String subject;
+  late String grade;
+  late TimeOfDay startTime;
+  late TimeOfDay endTime;
+  late List<String> days;
+
+  final names = ['Joseph', 'Stalin', 'Henry', 'Kane', 'Richardson'];
+  final List<String> grades = ['12', '13'];
+  final List<String> subjects = [
     "Biology",
     "Combined Mathematics",
     "Physics",
     "Chemistry"
   ];
+  final List<DayInWeek> _days = [
+    DayInWeek("Sun"),
+    DayInWeek("Mon"),
+    DayInWeek("Tue"),
+    DayInWeek("Wed"),
+    DayInWeek("Thu"),
+    DayInWeek("Fri"),
+    DayInWeek("Sat"),
+  ];
 
-  late TextEditingController _nameController;
-  late TextEditingController _subtitleController;
+  void handleOnSelect(List<String> values) {
+    days = values.map((val) => val).toList();
+  }
 
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.name);
-    _subtitleController = TextEditingController(text: widget.subject);
     name = widget.name;
-    taskSubtitle = widget.subject;
+    subject = widget.subject;
+    startTime = widget.startTime;
+    endTime = widget.endTime;
+    days = widget.days;
+
+    for (var day in _days) {
+      if (widget.days.contains('Sun')) {
+        day.isSelected = true;
+      } else if (widget.days.contains('Mon')) {
+        day.isSelected = true;
+      } else if (widget.days.contains('Tue')) {
+        day.isSelected = true;
+      } else if (widget.days.contains('Wed')) {
+        day.isSelected = true;
+      } else if (widget.days.contains('Thu')) {
+        day.isSelected = true;
+      } else if (widget.days.contains('Fri')) {
+        day.isSelected = true;
+      } else if (widget.days.contains('Sat')) {
+        day.isSelected = true;
+      }
+    }
   }
 
   // void handleOnSelect(List<String> values) {
@@ -96,61 +130,186 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
   @override
   void dispose() {
     super.dispose();
-    _nameController.dispose();
-    _subtitleController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      // Prompts the user to add a new task.
-      title: const Text('Update Task'),
+      // Prompts the user to update a time table.
+      title: const Text('Update Time Table'),
       content: SingleChildScrollView(
         // Creates a scrollable content area
         child: Form(
           key: formKey,
           child: Column(
             children: [
-              TextFormField(
-                controller: _nameController,
-                autofocus: true,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  labelText: "Main Task",
-                  helperText: "Ex: Shopping",
+              Container(
+                margin: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.0),
+                    border: Border.all(color: Colors.black, width: 1)),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    value: name,
+                    focusColor: Colors.transparent,
+                    hint: name == ""
+                        ? const Text('Please Chose One')
+                        : Text(
+                            name,
+                            style: const TextStyle(color: Colors.blue),
+                          ),
+                    isExpanded: true,
+                    iconSize: 36,
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.black,
+                    ),
+                    items: names.map((name) {
+                      return buildMenuItem(name);
+                    }).toList(),
+                    onChanged: (value) => setState(() {
+                      name = value!;
+                    }),
+                  ),
                 ),
-                validator: (value) {
-                  if (value!.isEmpty ||
-                      !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                    // Main Task cannot be Empty and should contain alphabets
-                    return "Enter correct Main Task";
-                  } else {
-                    return null;
-                  }
-                },
-                onChanged: (value) {
-                  name = value.trim();
-                },
               ),
-              TextFormField(
-                controller: _subtitleController,
-                autofocus: true,
-                decoration: const InputDecoration(
-                  labelText: "Sub Task",
-                  helperText: "Ex: Potatoes, Carrots",
+              const SizedBox(height: 16.0),
+              Container(
+                margin: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.0),
+                    border: Border.all(color: Colors.black, width: 1)),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    value: grade,
+                    focusColor: Colors.transparent,
+                    hint: grade == ""
+                        ? const Text('Please Chose One')
+                        : Text(
+                            grade,
+                            style: const TextStyle(color: Colors.blue),
+                          ),
+                    isExpanded: true,
+                    iconSize: 36,
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.black,
+                    ),
+                    items: grades.map((grade) {
+                      return buildMenuItem(grade);
+                    }).toList(),
+                    onChanged: (value) => setState(() {
+                      grade = value!;
+                    }),
+                  ),
                 ),
-                validator: (value) {
-                  if (!RegExp(r'^[a-z A-Z ,]+$').hasMatch(value!)) {
-                    // Sub Task cannot be Empty but should contain alphabets commas and whitespaces
-                    return "Enter correct Sub Task";
-                  } else {
-                    return null;
-                  }
-                },
-                keyboardType: TextInputType.text,
-                onChanged: (value) {
-                  taskSubtitle = value.trim();
-                },
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Container(
+                margin: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.0),
+                    border: Border.all(color: Colors.black, width: 1)),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    value: subject,
+                    focusColor: Colors.transparent,
+                    hint: widget.subject == ""
+                        ? const Text('Please Chose One')
+                        : Text(
+                            widget.subject,
+                            style: const TextStyle(color: Colors.blue),
+                          ),
+                    isExpanded: true,
+                    iconSize: 36,
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.black,
+                    ),
+                    items: subjects.map((subject) {
+                      return buildMenuItem(subject);
+                    }).toList(),
+                    onChanged: (value) => setState(() {
+                      subject = value!;
+                    }),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              SelectWeekDays(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                days: _days,
+                border: false,
+                boxDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    colors: [Color(0xFFE55CE4), Color(0xFFBB75FB)],
+                    tileMode: TileMode
+                        .repeated, // repeats the gradient over the canvas
+                  ),
+                ),
+                onSelect: (values) => handleOnSelect(values),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                      child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(startTime.format(context).toString()),
+                  )),
+                  TextButton.icon(
+                    style: TextButton.styleFrom(
+                        fixedSize: const Size(120, 40),
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.red),
+                    icon: const Icon(Icons.timer_outlined),
+                    onPressed: () =>
+                        selectTime(context, startTime).then((value) => setState(
+                              () {
+                                startTime = value;
+                              },
+                            )),
+                    label: const Text('Pick'),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                      child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(endTime.format(context).toString()),
+                  )),
+                  TextButton.icon(
+                    style: TextButton.styleFrom(
+                        fixedSize: const Size(120, 40),
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.red),
+                    icon: const Icon(Icons.timer_outlined),
+                    onPressed: () =>
+                        selectTime(context, endTime).then((value) => setState(
+                              () {
+                                endTime = value;
+                              },
+                            )),
+                    label: const Text('Pick'),
+                  ),
+                ],
               ),
             ],
           ),
@@ -170,12 +329,15 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
               editTimeTable(widget.timeTable.id, {
                 'id': widget.timeTable.id,
                 'name': name,
-                'subtitle': "None",
-                'isComplete': widget.days
+                'grade': int.parse(grade),
+                'subject': subject,
+                'days': days,
+                'startTime': startTime,
+                'endTime': endTime,
               });
 
               const snackBar = SnackBar(
-                content: Text('Task Updated Successfully'),
+                content: Text('Time Table Updated Successfully'),
               );
               ScaffoldMessenger.of(context).showSnackBar(
                   snackBar); // Displays a message to the user when an existing task is updated successfully.
@@ -188,4 +350,12 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
       ],
     );
   }
+
+  DropdownMenuItem<String> buildMenuItem(String value) => DropdownMenuItem(
+        value: value,
+        child: Text(
+          value,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+      );
 }

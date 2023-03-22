@@ -1,5 +1,6 @@
 import 'package:day_picker/day_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:institute_management_app/reusable_widgets/label_heading_widget.dart';
 import '../utils/database.dart';
 
 class AddDialogWidget extends StatefulWidget {
@@ -19,6 +20,8 @@ class AddDialogWidget extends StatefulWidget {
 class _AddDialogWidgetState extends State<AddDialogWidget> {
   final formKey = GlobalKey<FormState>();
   final names = ['Joseph', 'Stalin', 'Henry', 'Kane', 'Richardson'];
+  final subjects = ['Biology', 'Physics', 'Chemistry', 'Combined Mathematics'];
+  final grades = ['12', '13'];
   final List<DayInWeek> _days = [
     DayInWeek(
       "Sun",
@@ -42,8 +45,8 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
   ];
 
   String name = '';
+  String grade = '12';
   String subject = "";
-  int grade = 1;
   List<String> days = [];
   TimeOfDay startTime = const TimeOfDay(hour: 8, minute: 30);
   TimeOfDay endTime = const TimeOfDay(hour: 10, minute: 30);
@@ -51,7 +54,6 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
   // endTime.format(context).toString()
   void handleOnSelect(List<String> values) {
     days = values.map((val) => val).toList();
-    print(days);
   }
 
   Future<TimeOfDay> selectTime(
@@ -71,79 +73,110 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      // Prompts the user to add a new task.
-      title: const Text('Add Task'),
+      // Prompts the user to add a new time table.
+      title: const Text('Add Time Table'),
       content: SingleChildScrollView(
         // Creates a scrollable content area
         child: Form(
           key: formKey,
           child: Column(
             children: [
-              TextFormField(
-                autofocus: true,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  labelText: "Main Task",
-                  helperText: "Ex: Shopping",
-                ),
-                validator: (value) {
-                  if (value!.isEmpty ||
-                      !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                    // Main Task cannot be Empty and should contain alphabets
-                    return "Enter correct Main Task";
-                  } else {
-                    return null;
-                  }
-                },
-                onChanged: (value) {
-                  name = value.trim();
-                },
-              ),
-              const SizedBox(height: 16.0),
-              TextFormField(
-                autofocus: true,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  labelText: 'Sub Task',
-                  helperText: "Ex: Potatoes, Carrots",
-                ),
-                validator: (value) {
-                  if (!RegExp(r'^[a-z A-Z ,]+$').hasMatch(value!)) {
-                    // Sub Task can be Empty but should contain alphabets commas and whitespaces
-                    return "Enter correct Sub Task";
-                  } else {
-                    return null;
-                  }
-                },
-                onChanged: (value) {
-                  subject = value.trim();
-                },
-              ),
-              const SizedBox(
-                height: 16,
-              ),
+              const LabelHeading(label: "Teacher Name:"),
               Container(
                 margin: const EdgeInsets.all(8.0),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.0),
                     border: Border.all(color: Colors.black, width: 1)),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton(
-                    value: name,
+                    focusColor: Colors.transparent,
+                    hint: name == ""
+                        ? const Text('Please Chose One')
+                        : Text(
+                            name,
+                            style: const TextStyle(color: Colors.blue),
+                          ),
                     isExpanded: true,
                     iconSize: 36,
                     icon: const Icon(
                       Icons.arrow_drop_down,
                       color: Colors.black,
                     ),
-                    items: names.map(buildMenuItem).toList(),
+                    items: names.map((name) {
+                      return buildMenuItem(name);
+                    }).toList(),
                     onChanged: (value) => setState(() {
                       name = value!;
                     }),
                   ),
                 ),
+              ),
+              const LabelHeading(label: "Grade:"),
+              Container(
+                margin: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.0),
+                    border: Border.all(color: Colors.black, width: 1)),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    focusColor: Colors.transparent,
+                    hint: grade == ""
+                        ? const Text('Please Chose One')
+                        : Text(
+                            grade,
+                            style: const TextStyle(color: Colors.blue),
+                          ),
+                    isExpanded: true,
+                    iconSize: 36,
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.black,
+                    ),
+                    items: grades.map((grade) {
+                      return buildMenuItem(grade);
+                    }).toList(),
+                    onChanged: (value) => setState(() {
+                      grade = value!;
+                    }),
+                  ),
+                ),
+              ),
+              const LabelHeading(label: "Subject:"),
+              Container(
+                margin: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.0),
+                    border: Border.all(color: Colors.black, width: 1)),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    focusColor: Colors.transparent,
+                    hint: subject == ""
+                        ? const Text('Please Chose One')
+                        : Text(
+                            subject,
+                            style: const TextStyle(color: Colors.blue),
+                          ),
+                    isExpanded: true,
+                    iconSize: 36,
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.black,
+                    ),
+                    items: subjects.map((subject) {
+                      return buildMenuItem(subject);
+                    }).toList(),
+                    onChanged: (value) => setState(() {
+                      subject = value!;
+                    }),
+                  ),
+                ),
+              ),
+              const LabelHeading(label: "Days:"),
+              const SizedBox(
+                height: 8,
               ),
               SelectWeekDays(
                 fontSize: 14,
@@ -161,6 +194,57 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
                 ),
                 onSelect: (values) => handleOnSelect(values),
               ),
+              const SizedBox(
+                height: 12,
+              ),
+              const LabelHeading(label: "Start Time:"),
+              Row(
+                children: [
+                  Expanded(
+                      child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(startTime.format(context).toString()),
+                  )),
+                  TextButton.icon(
+                    style: TextButton.styleFrom(
+                        fixedSize: const Size(120, 40),
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.red),
+                    icon: const Icon(Icons.timer_outlined),
+                    onPressed: () =>
+                        selectTime(context, startTime).then((value) => setState(
+                              () {
+                                startTime = value;
+                              },
+                            )),
+                    label: const Text('Pick'),
+                  ),
+                ],
+              ),
+              const LabelHeading(label: "End Time:"),
+              Row(
+                children: [
+                  Expanded(
+                      child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(endTime.format(context).toString()),
+                  )),
+                  TextButton.icon(
+                    style: TextButton.styleFrom(
+                        fixedSize: const Size(120, 40),
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.red),
+                    icon: const Icon(Icons.timer_outlined),
+                    onPressed: () =>
+                        selectTime(context, endTime).then((value) => setState(
+                              () {
+                                endTime = value;
+                              },
+                            )),
+                    label: const Text('Pick'),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -176,7 +260,8 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
           child: const Text('ADD'),
           onPressed: () {
             if (formKey.currentState!.validate()) {
-              addTimeTable(name, grade, subject, days, startTime, endTime);
+              addTimeTable(
+                  name, int.parse(grade), subject, days, startTime, endTime);
               const snackBar = SnackBar(
                 content: Text('Task Added Successfully'),
               );
@@ -192,10 +277,10 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
     );
   }
 
-  DropdownMenuItem<String> buildMenuItem(String name) => DropdownMenuItem(
-        value: name,
+  DropdownMenuItem<String> buildMenuItem(String value) => DropdownMenuItem(
+        value: value,
         child: Text(
-          name,
+          value,
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
       );

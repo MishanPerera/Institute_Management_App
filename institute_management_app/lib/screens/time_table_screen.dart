@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:institute_management_app/components/add_dailog.dart';
 import 'package:institute_management_app/components/build_content.dart';
 import 'package:institute_management_app/models/time_table_model.dart';
 import 'package:institute_management_app/utils/database.dart';
@@ -27,25 +28,6 @@ class _TimeTableScreenState extends State<TimeTableScreen> {
     _scrollController.dispose();
   }
 
-  void handleLogout() {
-    QuickAlert.show(
-        context: context,
-        title: 'Do you want to logout?',
-        type: QuickAlertType.confirm,
-        barrierDismissible: true,
-        cancelBtnText: 'No',
-        confirmBtnText: 'Yes',
-        onConfirmBtnTap: () {
-          signOut();
-        });
-  }
-
-  void signOut() {
-    FirebaseAuth.instance.signOut();
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
-    navigatorKey.currentState!.pushReplacementNamed('/login');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +41,7 @@ class _TimeTableScreenState extends State<TimeTableScreen> {
           IconButton(
             onPressed: () {
               // Display a dialog on top of the current widget, which allows the user to input new data and add it to the application.
+              AddDialogWidget.show(context);
             },
             tooltip: 'showDailog',
             icon: const Icon(Icons.add),

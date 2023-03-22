@@ -51,7 +51,7 @@ class BuildContent extends StatelessWidget {
                       context,
                       timetable,
                       timetable.name,
-                      timetable.grade,
+                      timetable.grade.toString(),
                       timetable.subject,
                       timetable.days,
                       timetable.startTime,
