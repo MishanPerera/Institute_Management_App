@@ -3,7 +3,7 @@ import 'package:institute_management_app/models/menu_page_model.dart';
 
 class MenuItems {
   static const timeTable = MenuItem('Time Table', Icons.table_chart_outlined);
-  static const promos = MenuItem('Promo', Icons.card_giftcard);
+  static const notice = MenuItem('Notice', Icons.card_giftcard);
   static const notifications = MenuItem('Notification', Icons.notifications);
   static const help = MenuItem('Help', Icons.help);
   static const aboutUs = MenuItem('About Us', Icons.info_outline);
@@ -11,7 +11,7 @@ class MenuItems {
 
   static const all = <MenuItem>[
     timeTable,
-    promos,
+    notice,
     notifications,
     help,
     aboutUs,

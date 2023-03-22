@@ -5,7 +5,7 @@ import 'package:institute_management_app/models/menu_page_model.dart';
 import 'package:institute_management_app/screens/menu_page.dart';
 
 import 'package:institute_management_app/screens/pages/time_table_screen.dart';
-import 'package:institute_management_app/screens/pages/sample_page_1.dart';
+import 'package:institute_management_app/screens/pages/notice_screen.dart';
 import 'package:institute_management_app/screens/pages/sample_page_2.dart';
 import 'package:institute_management_app/screens/pages/sample_page_3.dart';
 import 'package:institute_management_app/screens/pages/sample_page_4.dart';
@@ -47,8 +47,8 @@ class _MainPageState extends State<MainPage> {
         return const TimeTable(
           title: 'Time Table',
         );
-      case MenuItems.promos:
-        return const SamplePage1();
+      case MenuItems.notice:
+        return const Notice();
       case MenuItems.notifications:
         return const SamplePage2();
       case MenuItems.help:
