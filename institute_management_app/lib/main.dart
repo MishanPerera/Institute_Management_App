@@ -1,7 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:institute_management_app/screens/Login.dart';
 import 'package:institute_management_app/screens/main_page.dart';
-import 'package:institute_management_app/screens/signin_screen.dart';
 
 import 'firebase_options.dart';
 
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/home': (context) => const MainPage(),
-        '/login': (context) => SignInScreen()
+        '/login': (context) => Login()
       },
       home: const MainPage(),
     );
