@@ -44,7 +44,7 @@ class _MainPageState extends State<MainPage> {
   Widget getScreen() {
     switch (currentItem) {
       case MenuItems.timeTable:
-        return const TimeTable(
+        return const TimeTableScreen(
           title: 'Time Table',
         );
       case MenuItems.notice:
