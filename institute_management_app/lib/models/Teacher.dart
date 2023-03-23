@@ -4,16 +4,16 @@ class Teacher {
   final String uid;
   final String name;
   final String email;
-  final List<String> courses;
+  final String subject;
   final String contactNumber;
   final String grade;
-  final DateTime dateOfBirth;
+  final String dateOfBirth;
 
   Teacher(
     this.uid,
     this.name,
     this.email,
-    this.courses,
+    this.subject,
     this.contactNumber,
     this.grade,
     this.dateOfBirth,

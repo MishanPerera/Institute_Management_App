@@ -9,7 +9,7 @@ import '../main.dart';
 class MenuItems {
   static const timeTable = MenuItem('Time Table', Icons.table_chart_outlined);
   static const notice = MenuItem('Notice', Icons.card_giftcard);
-  static const notifications = MenuItem('Notification', Icons.notifications);
+  static const teacher = MenuItem('Teacher', Icons.person);
   static const help = MenuItem('Help', Icons.help);
   static const aboutUs = MenuItem('About Us', Icons.info_outline);
   static const rateUs = MenuItem('Rate Us', Icons.star_border);
@@ -17,7 +17,7 @@ class MenuItems {
   static const all = <MenuItem>[
     timeTable,
     notice,
-    notifications,
+    teacher,
     help,
     aboutUs,
     rateUs
