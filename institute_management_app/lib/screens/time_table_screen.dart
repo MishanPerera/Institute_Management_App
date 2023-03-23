@@ -4,7 +4,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:institute_management_app/components/add_dailog.dart';
 import 'package:institute_management_app/components/build_content.dart';
 import 'package:institute_management_app/models/time_table_model.dart';
-import 'package:institute_management_app/utils/database.dart';
+import 'package:institute_management_app/services/time_table_service.dart';
 import 'package:quickalert/quickalert.dart';
 
 import '../main.dart';

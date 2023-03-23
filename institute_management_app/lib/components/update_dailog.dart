@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:institute_management_app/models/time_table_model.dart';
 import 'package:institute_management_app/reusable_widgets/label_heading_widget.dart';
 
-import '../utils/database.dart';
+import '../services/time_table_service.dart';
 
 class UpdateDialogWidget extends StatefulWidget {
   final TimeTable timeTable;

@@ -1,7 +1,7 @@
 import 'package:day_picker/day_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:institute_management_app/reusable_widgets/label_heading_widget.dart';
-import '../utils/database.dart';
+import '../services/time_table_service.dart';
 
 class AddDialogWidget extends StatefulWidget {
   const AddDialogWidget({super.key});

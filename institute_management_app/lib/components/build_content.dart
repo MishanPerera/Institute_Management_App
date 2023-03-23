@@ -3,7 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:institute_management_app/components/update_dailog.dart';
 import 'package:quickalert/quickalert.dart';
 
-import '../utils/database.dart';
+import '../services/time_table_service.dart';
 import 'package:institute_management_app/models/time_table_model.dart';
 
 class BuildContent extends StatelessWidget {
