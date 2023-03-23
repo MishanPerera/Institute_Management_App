@@ -1,7 +1,10 @@
 import 'package:day_picker/day_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:institute_management_app/models/Teacher.dart';
 import 'package:institute_management_app/reusable_widgets/label_heading_widget.dart';
+import 'package:quickalert/quickalert.dart';
 import '../services/time_table_service.dart';
+// import '../services/techer_service.dart';
 
 class AddDialogWidget extends StatefulWidget {
   const AddDialogWidget({super.key});
@@ -18,29 +21,18 @@ class AddDialogWidget extends StatefulWidget {
 }
 
 class _AddDialogWidgetState extends State<AddDialogWidget> {
+  List<Teacher> teachers = [];
   final names = ['Joseph', 'Stalin', 'Henry', 'Kane', 'Richardson'];
   final subjects = ['Biology', 'Physics', 'Chemistry', 'Combined Mathematics'];
   final grades = ['12', '13'];
   final List<DayInWeek> _days = [
-    DayInWeek(
-      "Sun",
-    ),
-    DayInWeek(
-      "Mon",
-    ),
+    DayInWeek("Sun"),
+    DayInWeek("Mon"),
     DayInWeek("Tue"),
-    DayInWeek(
-      "Wed",
-    ),
-    DayInWeek(
-      "Thu",
-    ),
-    DayInWeek(
-      "Fri",
-    ),
-    DayInWeek(
-      "Sat",
-    ),
+    DayInWeek("Wed"),
+    DayInWeek("Thu"),
+    DayInWeek("Fri"),
+    DayInWeek("Sat"),
   ];
 
   String name = '';
@@ -49,6 +41,24 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
   List<String> days = [];
   TimeOfDay startTime = const TimeOfDay(hour: 8, minute: 30);
   TimeOfDay endTime = const TimeOfDay(hour: 10, minute: 30);
+
+  @override
+  void initState() {
+    super.initState();
+    fetchTeachers();
+  }
+
+  void fetchTeachers() async {
+    // try {
+    //   final result = await getTeachers();
+    //   setState(() {
+    //     teachers = result;
+    //   });
+    //   print(result);
+    // } catch (e) {
+    //   // Handle error
+    // }
+  }
 
   void handleOnSelect(List<String> values) {
     setState(() {
@@ -77,7 +87,8 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
         // Creates a scrollable content area
         child: Column(
           children: [
-            const LabelHeading(label: "Teacher Name:"),
+            const LabelHeading(
+                label: "Teacher Name:", color: Color(0xff000000)),
             Container(
               margin: const EdgeInsets.all(8.0),
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
@@ -108,7 +119,7 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
                 ),
               ),
             ),
-            const LabelHeading(label: "Grade:"),
+            const LabelHeading(label: "Grade:", color: Color(0xff000000)),
             Container(
               margin: const EdgeInsets.all(8.0),
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
@@ -139,7 +150,7 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
                 ),
               ),
             ),
-            const LabelHeading(label: "Subject:"),
+            const LabelHeading(label: "Subject:", color: Color(0xff000000)),
             Container(
               margin: const EdgeInsets.all(8.0),
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
@@ -170,7 +181,7 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
                 ),
               ),
             ),
-            const LabelHeading(label: "Days:"),
+            const LabelHeading(label: "Days:", color: Color(0xff000000)),
             const SizedBox(
               height: 8,
             ),
@@ -193,7 +204,7 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
             const SizedBox(
               height: 12,
             ),
-            const LabelHeading(label: "Start Time:"),
+            const LabelHeading(label: "Start Time:", color: Color(0xff000000)),
             Row(
               children: [
                 Expanded(
@@ -217,7 +228,7 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
                 ),
               ],
             ),
-            const LabelHeading(label: "End Time:"),
+            const LabelHeading(label: "End Time:", color: Color(0xff000000)),
             Row(
               children: [
                 Expanded(
@@ -253,7 +264,7 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
         ),
         TextButton(
           child: const Text('ADD'),
-          onPressed: () {
+          onPressed: () async {
             if (name.isNotEmpty && subject.isNotEmpty && days.isNotEmpty) {
               addTimeTable(
                   name, int.parse(grade), subject, days, startTime, endTime);
@@ -265,6 +276,14 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
 
               Navigator.of(context)
                   .pop(); // Dismiss the dialog and return to the main screen.
+            } else {
+              await QuickAlert.show(
+                  context: context,
+                  autoCloseDuration: const Duration(seconds: 3),
+                  type: QuickAlertType.error,
+                  title: 'Attention',
+                  text:
+                      "There are items that require your attention. Please review before proceeding");
             }
           },
         ),
@@ -276,7 +295,7 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
         value: value,
         child: Text(
           value,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: const TextStyle(fontSize: 16),
         ),
       );
 }

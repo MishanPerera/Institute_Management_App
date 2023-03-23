@@ -7,31 +7,37 @@ import '../services/time_table_service.dart';
 import 'package:institute_management_app/models/time_table_model.dart';
 
 class BuildContent extends StatelessWidget {
-  final TimeTable timetable;
+  final TimeTable timeTable;
 
   const BuildContent({
     super.key,
-    required this.timetable,
+    required this.timeTable,
   });
 
   @override
   Widget build(BuildContext context) {
     // Dailog Box to Handle Logout
-    void handleDelete() {
-      QuickAlert.show(
+    void handleDelete() async {
+      await QuickAlert.show(
           context: context,
-          title: 'Do you want to delete?',
+          title: 'Delete Time Table?',
+          text:
+              "Are you sure to delete this context?\nYou can't revert this action.",
           type: QuickAlertType.confirm,
+          animType: QuickAlertAnimType.slideInUp,
+          autoCloseDuration: const Duration(seconds: 5),
           barrierDismissible: true,
           cancelBtnText: 'No',
           confirmBtnText: 'Yes',
+          onCancelBtnTap: () {
+            Navigator.of(context).pop();
+          },
           onConfirmBtnTap: () {
-            deleteTimeTable(timetable.id);
+            deleteTimeTable(timeTable.id);
             const snackBar = SnackBar(
               content: Text('Time Table Deleted Successfully'),
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
             Navigator.of(context).pop();
           });
     }
@@ -49,13 +55,13 @@ class BuildContent extends StatelessWidget {
                 onPressed: ((context) {
                   UpdateDialogWidget.show(
                       context,
-                      timetable,
-                      timetable.name,
-                      timetable.grade.toString(),
-                      timetable.subject,
-                      timetable.days,
-                      timetable.startTime,
-                      timetable.endTime);
+                      timeTable,
+                      timeTable.name,
+                      timeTable.grade.toString(),
+                      timeTable.subject,
+                      timeTable.days,
+                      timeTable.startTime,
+                      timeTable.endTime);
                 }),
                 borderRadius: BorderRadius.circular(8.0),
                 icon: Icons.edit,
@@ -85,7 +91,13 @@ class BuildContent extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 8.0),
             decoration: BoxDecoration(
-                color: Colors.white,
+                color: timeTable.subject == "Physics"
+                    ? const Color(0xffcd3700)
+                    : timeTable.subject == "Biology"
+                        ? const Color(0xff03A89E)
+                        : timeTable.subject == "Chemistry"
+                            ? const Color(0xff4682B4)
+                            : const Color(0xffff9912),
                 borderRadius: BorderRadius.circular(8.0),
                 boxShadow: const [
                   BoxShadow(
@@ -95,14 +107,38 @@ class BuildContent extends StatelessWidget {
                 ]),
             child: ListTile(
               dense: true,
-              title: Text(
-                timetable.name,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Teacher -> ${timeTable.name}',
+                  ),
+                  Text(
+                    'Grade -> ${timeTable.grade}',
+                  ),
+                ],
               ), // Depending on whether a task is complete or incomplete, the widgets will fade or be normal.
-              subtitle: Text(
-                timetable.subject,
+              subtitle: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Days: ${timeTable.days.map((day) => day)}',
+                    ),
+                  ),
+                  const Icon(
+                    Icons.timer_outlined,
+                    size: 14,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4.0, top: 1.0),
+                    child:
+                        Text('${timeTable.startTime} ~ ${timeTable.endTime}'),
+                  ),
+                ],
               ),
               leading: const Icon(
-                Icons.task_outlined,
+                Icons.view_timeline_outlined,
                 size: 30,
               ),
             ),

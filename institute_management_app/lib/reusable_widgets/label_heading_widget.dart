@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class LabelHeading extends StatelessWidget {
   final String label;
+  final Color color;
   const LabelHeading({
     super.key,
     required this.label,
+    required this.color,
   });
 
   @override
@@ -17,6 +19,7 @@ class LabelHeading extends StatelessWidget {
           height: 24,
           child: Text(
             label,
+            style: TextStyle(color: color),
           ),
         ),
       ),

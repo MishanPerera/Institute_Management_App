@@ -135,7 +135,8 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
           key: formKey,
           child: Column(
             children: [
-              const LabelHeading(label: "Teacher Name:"),
+              const LabelHeading(
+                  label: "Teacher Name:", color: Color(0xff000000)),
               Container(
                 margin: const EdgeInsets.all(8.0),
                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
@@ -167,7 +168,7 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
                   ),
                 ),
               ),
-              const LabelHeading(label: "Grade:"),
+              const LabelHeading(label: "Grade:", color: Color(0xff000000)),
               Container(
                 margin: const EdgeInsets.all(8.0),
                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
@@ -199,7 +200,7 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
                   ),
                 ),
               ),
-              const LabelHeading(label: "Subject:"),
+              const LabelHeading(label: "Subject:", color: Color(0xff000000)),
               Container(
                 margin: const EdgeInsets.all(8.0),
                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
@@ -231,7 +232,7 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
                   ),
                 ),
               ),
-              const LabelHeading(label: "Days:"),
+              const LabelHeading(label: "Days:", color: Color(0xff000000)),
               const SizedBox(
                 height: 8,
               ),
@@ -254,7 +255,8 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
               const SizedBox(
                 height: 12,
               ),
-              const LabelHeading(label: "Start Time:"),
+              const LabelHeading(
+                  label: "Start Time:", color: Color(0xff000000)),
               Row(
                 children: [
                   Expanded(
@@ -278,7 +280,7 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
                   ),
                 ],
               ),
-              const LabelHeading(label: "End Time:"),
+              const LabelHeading(label: "End Time:", color: Color(0xff000000)),
               Row(
                 children: [
                   Expanded(
@@ -346,7 +348,7 @@ class _UpdateDialogWidgetState extends State<UpdateDialogWidget> {
         value: value,
         child: Text(
           value,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: const TextStyle(fontSize: 16),
         ),
       );
 }
