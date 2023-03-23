@@ -8,7 +8,7 @@ import 'package:institute_management_app/screens/time_table_screen.dart';
 import 'package:institute_management_app/screens/notice_screen.dart';
 import 'package:institute_management_app/screens/TeacherScreen.dart';
 import 'package:institute_management_app/screens/sample_page_3.dart';
-import 'package:institute_management_app/screens/sample_page_4.dart';
+import 'package:institute_management_app/screens/AboutUsPage.dart';
 import 'package:institute_management_app/screens/sample_page_5.dart';
 
 class MainPage extends StatefulWidget {
@@ -54,7 +54,7 @@ class _MainPageState extends State<MainPage> {
       case MenuItems.help:
         return const SamplePage3();
       case MenuItems.aboutUs:
-        return const SamplePage4();
+        return AboutUsPage();
       default:
         return const SamplePage5();
     }
