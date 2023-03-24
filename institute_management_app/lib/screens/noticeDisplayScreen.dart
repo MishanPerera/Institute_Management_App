@@ -4,7 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:institute_management_app/reusable_widgets/noticeCard.dart';
-import 'package:institute_management_app/screens/notice_screen.dart';
+import 'package:institute_management_app/screens/addNoticeScreen.dart';
+import 'package:institute_management_app/screens/viewSingleNoticeScreen.dart';
 
 class noticeDisplay extends StatefulWidget {
   const noticeDisplay({super.key});
@@ -65,6 +66,7 @@ class _noticeDisplayState extends State<noticeDisplay> {
         //   ],
         // ),
         appBar: AppBar(
+          backgroundColor: Color(0xff2d2041),
           leading: IconButton(
               icon: const Icon(Icons.menu),
               onPressed: () => ZoomDrawer.of(context)!.toggle()),
@@ -109,63 +111,23 @@ class _noticeDisplayState extends State<noticeDisplay> {
                       default:
                         cardColor = Color(0xff2d2041);
                     }
-                    return NoticeCard(
-                      heading: document["heading"],
-                      classType: document["classType"],
-                      cardColor: cardColor,
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => ViewNotice(
+                                      document: document,
+                                      id: snapshot.data!.docs[index].id,
+                                    )));
+                      },
+                      child: NoticeCard(
+                        heading: document["heading"],
+                        classType: document["classType"],
+                        cardColor: cardColor,
+                      ),
                     );
                   });
             }));
-
-    // child: Column(
-    //   height: 52,
-    //   width: 52,
-    //   decoration: BoxDecoration(
-    //     shape: BoxShape.circle,
-    //     gradient: LinearGradient(
-    //       colors: [
-    //         Colors.indigoAccent,
-    //         Colors.purple,
-    //       ],
-    //     ),
-    //   ),
-    //   child: Icon(
-    //     Icons.add,
-    //     size: 32,
-    //     color: Colors.white,
-    //   ),
-    // ),
-  }
-
-  Widget button() {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (builder) => Notice()));
-      },
-      child: Container(
-        height: 45,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          gradient: LinearGradient(
-            colors: [
-              Color.fromARGB(255, 125, 23, 242),
-              Color.fromARGB(255, 96, 12, 148),
-            ],
-          ),
-        ),
-        child: Center(
-          child: Text(
-            "ADD NOTICE",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }

@@ -1,40 +1,41 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
-// class Notice extends StatelessWidget {
-//   const Notice({Key? key}) : super(key: key);
+class ViewNotice extends StatefulWidget {
+  const ViewNotice({super.key, required this.document, required this.id});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.amberAccent,
-//       appBar: AppBar(
-//         leading: IconButton(
-//           icon: const Icon(Icons.menu),
-//           onPressed: () => ZoomDrawer.of(context)!.toggle(),
-//         ),
-//         title: const Text(
-//           "Notices",
-//         ),
-//       ),
-//     );
-//   }
-// }
+  //retreiving the notice data from displayNotice page to viewSinglePage
+  final Map<String, dynamic> document;
 
-class Notice extends StatefulWidget {
-  const Notice({super.key});
+  final String id;
 
   @override
-  State<Notice> createState() => _NoticeState();
+  State<ViewNotice> createState() => _ViewNoticeState();
 }
 
-class _NoticeState extends State<Notice> {
-  TextEditingController _headingController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
-  String classType = "";
-  String category = "";
+class _ViewNoticeState extends State<ViewNotice> {
+  late TextEditingController _headingController;
+  late TextEditingController _descriptionController;
+  late String classType;
+  late String category;
+  bool edit = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    //initialize the TextEditingController
+    _headingController =
+        TextEditingController(text: widget.document["heading"]);
+    _descriptionController =
+        TextEditingController(text: widget.document["description"]);
+    classType = widget.document["classType"];
+    category = widget.document["category"];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +53,34 @@ class _NoticeState extends State<Notice> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(CupertinoIcons.arrow_left,
+                        color: Colors.white, size: 28),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        edit = !edit;
+                      });
+                      ;
+                    },
+                    icon: Icon(Icons.edit,
+                        color: edit
+                            ? Color.fromARGB(255, 7, 215, 56)
+                            : Colors.white,
+                        size: 28),
+                  ),
+                ],
+              ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 25, vertical: 4),
@@ -59,7 +88,7 @@ class _NoticeState extends State<Notice> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Create",
+                      edit ? "Updating" : "View",
                       style: TextStyle(
                         fontSize: 25,
                         color: Colors.white,
@@ -71,7 +100,7 @@ class _NoticeState extends State<Notice> {
                       height: 2,
                     ),
                     Text(
-                      "New Notice",
+                      "The Notice",
                       style: TextStyle(
                         fontSize: 25,
                         color: Colors.white,
@@ -138,21 +167,12 @@ class _NoticeState extends State<Notice> {
                     SizedBox(
                       height: 40,
                     ),
-                    button(),
+                    edit ? button() : Container(),
                   ],
                 ),
               ),
             ],
           ),
-        ),
-      ),
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () => ZoomDrawer.of(context)!.toggle(),
-        ),
-        title: const Text(
-          "Notices",
         ),
       ),
     );
@@ -161,7 +181,7 @@ class _NoticeState extends State<Notice> {
   Widget button() {
     return InkWell(
       onTap: () {
-        FirebaseFirestore.instance.collection("notices").add({
+        FirebaseFirestore.instance.collection("notices").doc(widget.id).update({
           "heading": _headingController.text,
           "classType": classType,
           "description": _descriptionController.text,
@@ -183,7 +203,7 @@ class _NoticeState extends State<Notice> {
         ),
         child: Center(
           child: Text(
-            "ADD NOTICE",
+            "UPDATE NOTICE",
             style: TextStyle(
               color: Colors.white,
               fontSize: 18,
@@ -197,11 +217,13 @@ class _NoticeState extends State<Notice> {
 
   Widget categoryType(String label, int color) {
     return InkWell(
-      onTap: () {
-        setState(() {
-          category = label;
-        });
-      },
+      onTap: edit
+          ? () {
+              setState(() {
+                category = label;
+              });
+            }
+          : null,
       child: Chip(
         backgroundColor: category == label ? Colors.white : Color(color),
         shape: RoundedRectangleBorder(
@@ -233,6 +255,7 @@ class _NoticeState extends State<Notice> {
       ),
       child: TextFormField(
         controller: _descriptionController,
+        enabled: edit,
         style: TextStyle(
           color: Colors.grey,
           fontSize: 17,
@@ -256,11 +279,13 @@ class _NoticeState extends State<Notice> {
 
   Widget className(String label, int color) {
     return InkWell(
-      onTap: () {
-        setState(() {
-          classType = label;
-        });
-      },
+      onTap: edit
+          ? () {
+              setState(() {
+                classType = label;
+              });
+            }
+          : null,
       child: Chip(
         backgroundColor: classType == label
             ? Colors.white
@@ -294,6 +319,7 @@ class _NoticeState extends State<Notice> {
       ),
       child: TextFormField(
         controller: _headingController,
+        enabled: edit,
         style: TextStyle(
           color: Colors.grey,
           fontSize: 17,
