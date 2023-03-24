@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:institute_management_app/components/addInfo.dart';
 import 'package:institute_management_app/reusable_widgets/noticeCard.dart';
 import 'package:institute_management_app/screens/addNoticeScreen.dart';
 import 'package:institute_management_app/screens/viewSingleNoticeScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+// import '../components/add_dailog.dart';
 
 class noticeDisplay extends StatefulWidget {
   const noticeDisplay({super.key});
@@ -15,6 +19,25 @@ class noticeDisplay extends StatefulWidget {
 }
 
 class _noticeDisplayState extends State<noticeDisplay> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final String email = "kavindu@gmail.com";
+  User? _user;
+
+  double _opacity = 0.0;
+  double _padding = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        _opacity = 1.0;
+        _padding = 8.0;
+      });
+    });
+    _user = _auth.currentUser;
+  }
+
 //create the Stream and fetch the all tha data availabe on the notices collection
   final Stream<QuerySnapshot> _stream =
       FirebaseFirestore.instance.collection("notices").snapshots();
@@ -28,13 +51,23 @@ class _noticeDisplayState extends State<noticeDisplay> {
               icon: const Icon(Icons.menu),
               onPressed: () => ZoomDrawer.of(context)!.toggle()),
           actions: [
+            Visibility(
+              visible: _user!.email == email,
+              child: IconButton(
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const Notice(),
+                  ),
+                ),
+                icon: const Icon(Icons.add),
+              ),
+            ),
             IconButton(
               onPressed: () {
-                // Navigate to the add Notice Page
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (builder) => Notice()));
+                // Display a dialog on top of the current widget
+                AddInforWidget.show(context);
               },
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.info),
             )
           ],
           title: const Text(
