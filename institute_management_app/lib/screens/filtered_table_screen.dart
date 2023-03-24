@@ -17,6 +17,8 @@ class FilterTableScreen extends StatefulWidget {
 
 class _FilterTableScreenState extends State<FilterTableScreen> {
   final _scrollController = ScrollController();
+  double _opacity = 0.0;
+  double _padding = 0.0;
   late final String label;
   late final String value;
 
@@ -25,6 +27,13 @@ class _FilterTableScreenState extends State<FilterTableScreen> {
     super.initState();
     label = widget.filterLabel.toUpperCase();
     value = widget.filterValue;
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        _opacity = 1.0;
+        _padding = 8.0;
+      });
+    });
   }
 
   @override
@@ -46,57 +55,66 @@ class _FilterTableScreenState extends State<FilterTableScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Column(children: [
-        const SizedBox(height: 16),
-        LabelHeading(
-            label: '$label: ${value.toUpperCase()}',
-            color: const Color(0xffffffff)),
-        Expanded(
-          child: StreamBuilder<List<TimeTable>>(
-            stream: getTimeTables(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return const Center(
-                  child: Text(
-                    'Something went wrong!',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                );
-              } else if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                List<TimeTable> timeTables = snapshot.data!;
+      body: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
+        padding: EdgeInsets.all(_padding),
+        child: Opacity(
+          opacity: _opacity,
+          child: Column(children: [
+            const SizedBox(height: 16),
+            LabelHeading(
+                label: '$label: ${value.toUpperCase()}',
+                color: const Color(0xffffffff)),
+            Expanded(
+              child: StreamBuilder<List<TimeTable>>(
+                stream: getTimeTables(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text(
+                        'Something went wrong!',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    );
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                    List<TimeTable> timeTables = snapshot.data!;
 
-                if (label == 'SUBJECT') {
-                  timeTables = timeTables
-                      .where((timeTable) => timeTable.subject == value)
-                      .toList();
-                } else {
-                  timeTables = timeTables
-                      .where(
-                          (timeTable) => timeTable.grade == int.tryParse(value))
-                      .toList();
-                }
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0),
-                  child: ListView.builder(
-                      controller: _scrollController,
-                      itemCount: timeTables.length,
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      itemBuilder: (BuildContext context, int index) {
-                        TimeTable timeTable = timeTables[index];
-                        return BuildContent(timeTable: timeTable);
-                      }),
-                );
-              } else {
-                return const Center(child: Text('No data to display'));
-              }
-            },
-          ),
+                    if (label == 'SUBJECT') {
+                      timeTables = timeTables
+                          .where((timeTable) => timeTable.subject == value)
+                          .toList();
+                      timeTables.sort((a, b) => a.grade.compareTo(b.grade));
+                    } else {
+                      timeTables = timeTables
+                          .where((timeTable) =>
+                              timeTable.grade == int.tryParse(value))
+                          .toList();
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
+                      child: ListView.builder(
+                          controller: _scrollController,
+                          itemCount: timeTables.length,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          itemBuilder: (BuildContext context, int index) {
+                            TimeTable timeTable = timeTables[index];
+                            return BuildContent(timeTable: timeTable);
+                          }),
+                    );
+                  } else {
+                    return const Center(child: Text('No data to display'));
+                  }
+                },
+              ),
+            ),
+          ]),
         ),
-      ]),
+      ),
     );
   }
 }

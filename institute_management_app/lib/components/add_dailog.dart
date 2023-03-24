@@ -1,10 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:day_picker/day_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:institute_management_app/models/Teacher.dart';
 import 'package:institute_management_app/reusable_widgets/label_heading_widget.dart';
+import 'package:institute_management_app/services/techer_service.dart';
+import 'package:logger/logger.dart';
 import 'package:quickalert/quickalert.dart';
 import '../services/time_table_service.dart';
 // import '../services/techer_service.dart';
+
+final logger = Logger(
+  level: Level.debug,
+  printer: PrettyPrinter(),
+);
 
 class AddDialogWidget extends StatefulWidget {
   const AddDialogWidget({super.key});
@@ -21,8 +29,8 @@ class AddDialogWidget extends StatefulWidget {
 }
 
 class _AddDialogWidgetState extends State<AddDialogWidget> {
+  TeacherService teacherService = TeacherService();
   List<Teacher> teachers = [];
-  final names = ['Joseph', 'Stalin', 'Henry', 'Kane', 'Richardson'];
   final subjects = ['Biology', 'Physics', 'Chemistry', 'Combined Mathematics'];
   final grades = ['12', '13'];
   final List<DayInWeek> _days = [
@@ -49,15 +57,21 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
   }
 
   void fetchTeachers() async {
-    // try {
-    //   final result = await getTeachers();
-    //   setState(() {
-    //     teachers = result;
-    //   });
-    //   print(result);
-    // } catch (e) {
-    //   // Handle error
-    // }
+    try {
+      final QuerySnapshot<Map<String, dynamic>> teacherQuery =
+          await FirebaseFirestore.instance.collection('teachers').get();
+      final queries = teacherQuery.docs
+          .map((query) => Teacher.fromSnapshot(query))
+          .toList();
+      for (Teacher query in queries) {
+        setState(() {
+          teachers.add(query);
+        });
+      }
+    } catch (e) {
+      logger.e(e);
+      // Handle error
+    }
   }
 
   void handleOnSelect(List<String> values) {
@@ -110,8 +124,8 @@ class _AddDialogWidgetState extends State<AddDialogWidget> {
                     Icons.arrow_drop_down,
                     color: Colors.black,
                   ),
-                  items: names.map((name) {
-                    return buildMenuItem(name);
+                  items: teachers.map((teacher) {
+                    return buildMenuItem(teacher.name);
                   }).toList(),
                   onChanged: (value) => setState(() {
                     name = value!;

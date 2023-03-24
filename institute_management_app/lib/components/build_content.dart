@@ -111,7 +111,7 @@ class BuildContent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Teacher -> ${timeTable.name}',
+                    'Teacher -> ${timeTable.name} (${timeTable.subject})',
                   ),
                   Text(
                     'Grade -> ${timeTable.grade}',
