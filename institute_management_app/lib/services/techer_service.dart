@@ -49,4 +49,15 @@ class TeacherService {
   Stream<List<Teacher>> listTeachers() {
     return teachersCollection.snapshots().map(teacherFromFirestore);
   }
+
+  // Future<List<Teacher>> getTeachers() {
+  //   return teachersCollection.get().then((querySnapshot) {
+  //     List<Teacher> teachersList = [];
+  //     for (var doc in querySnapshot.docs) {
+  //       teachersList.add(
+  //           teacherFromFirestore(doc as QuerySnapshot<Object?>) as Teacher);
+  //     }
+  //     return teachersList;
+  //   });
+  // }
 }

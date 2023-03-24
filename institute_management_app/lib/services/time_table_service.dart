@@ -1,5 +1,4 @@
 // import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:institute_management_app/models/time_table_model.dart';
 import 'package:logger/logger.dart';

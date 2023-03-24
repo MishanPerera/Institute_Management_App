@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Institute',
+      title: 'ScholarSphere',
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const MainPage(),
         '/login': (context) => Login()
       },
-      home: const MainPage(),
+      home: const Login(),
     );
   }
 }

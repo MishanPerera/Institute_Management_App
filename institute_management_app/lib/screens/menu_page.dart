@@ -27,7 +27,7 @@ class MenuItems {
 class MenuPage extends StatefulWidget {
   final MenuItem currentItem;
   final ValueChanged<MenuItem> onSelectedItem;
-
+  // Create an instance of FirebaseAuth
   const MenuPage(
       {Key? key, required this.currentItem, required this.onSelectedItem})
       : super(key: key);
@@ -37,6 +37,15 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _user = _auth.currentUser;
+  }
+
   void handleLogout() {
     QuickAlert.show(
         context: context,
@@ -69,15 +78,25 @@ class _MenuPageState extends State<MenuPage> {
             CircleAvatar(
               backgroundColor: Colors.brown.shade800,
               radius: 70,
-              child: Image.asset(
-                'assets/student.png',
-                fit: BoxFit.contain,
-              ),
+              child: _user == null
+                  ? Image.asset(
+                      'assets/student.png',
+                      fit: BoxFit.contain,
+                    )
+                  : Image.asset(
+                      'assets/admin.png',
+                      fit: BoxFit.contain,
+                    ),
             ),
             const SizedBox(
               height: 15,
             ),
-            const SizedBox(height: 15, child: Text('Joseph Stalin')),
+            SizedBox(
+              height: 24,
+              child: _user == null
+                  ? const Text('Guest')
+                  : Text(_user?.email ?? 'Guest'),
+            ),
             const Spacer(),
             ...MenuItems.all.map(buildMenuItem).toList(),
             const Spacer(flex: 2),
@@ -85,10 +104,10 @@ class _MenuPageState extends State<MenuPage> {
               style: TextButton.styleFrom(
                   fixedSize: const Size(120, 40),
                   foregroundColor: Colors.white,
-                  backgroundColor: Colors.red),
+                  backgroundColor: _user == null ? Colors.green : Colors.red),
               icon: const Icon(Icons.logout),
               onPressed: () => handleLogout(),
-              label: const Text('Logout'),
+              label: _user == null ? const Text('Login') : const Text('Logout'),
             ),
             const Spacer(),
           ],
