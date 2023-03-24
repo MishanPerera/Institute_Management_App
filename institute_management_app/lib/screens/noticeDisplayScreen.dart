@@ -22,49 +22,6 @@ class _noticeDisplayState extends State<noticeDisplay> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xff1d1e26),
-        // appBar: AppBar(
-        //   backgroundColor: Color(0xff1d1e26),
-        //   leading: IconButton(
-        //     icon: const Icon(Icons.menu),
-        //     onPressed: () => ZoomDrawer.of(context)!.toggle(),
-        //   ),
-        //   title: Text(
-        //     "Today's Notice",
-        //     style: TextStyle(
-        //       fontSize: 34,
-        //       fontWeight: FontWeight.bold,
-        //       color: Colors.white,
-        //     ),
-        //   ),
-        //   bottom: PreferredSize(
-        //     child: Align(
-        //       alignment: Alignment.centerLeft,
-        //       child: Padding(
-        //         padding: const EdgeInsets.only(left: 22),
-        //         child: Text(
-        //           "Monday 21",
-        //           style: TextStyle(
-        //             fontSize: 33,
-        //             fontWeight: FontWeight.w600,
-        //             color: Colors.white,
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //     preferredSize: Size.fromHeight(35),
-        //   ),
-        //   actions: [
-        //     IconButton(
-        //       onPressed: () {
-        //         // Navigate to the add Notice Page
-        //         Navigator.push(
-        //             context, MaterialPageRoute(builder: (builder) => Notice()));
-        //       },
-        //       tooltip: 'showDailog',
-        //       icon: const Icon(Icons.add),
-        //     )
-        //   ],
-        // ),
         appBar: AppBar(
           backgroundColor: Color(0xff2d2041),
           leading: IconButton(
