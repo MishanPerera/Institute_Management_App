@@ -6,6 +6,7 @@ import 'package:institute_management_app/components/build_content.dart';
 import 'package:institute_management_app/models/time_table_model.dart';
 import 'package:institute_management_app/reusable_widgets/label_heading_widget.dart';
 import 'package:institute_management_app/screens/filtered_table_screen.dart';
+import 'package:institute_management_app/screens/time_table_help.dart';
 import 'package:institute_management_app/services/time_table_service.dart';
 import 'package:quickalert/quickalert.dart';
 
@@ -20,6 +21,10 @@ class TimeTableScreen extends StatefulWidget {
 }
 
 class _TimeTableScreenState extends State<TimeTableScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final String email = "insafnilam.2000@gmail.com";
+  User? _user;
+
   final _scrollController = ScrollController();
   double _opacity = 0.0;
   double _padding = 0.0;
@@ -40,6 +45,7 @@ class _TimeTableScreenState extends State<TimeTableScreen> {
         _padding = 8.0;
       });
     });
+    _user = _auth.currentUser;
   }
 
   // Responsible for cleaning up resources and ensuring that the application is closed properly
@@ -60,14 +66,26 @@ class _TimeTableScreenState extends State<TimeTableScreen> {
             icon: const Icon(Icons.menu),
             onPressed: () => ZoomDrawer.of(context)!.toggle()),
         actions: [
+          Visibility(
+            visible: _user!.email == email,
+            child: IconButton(
+              onPressed: () {
+                // Display a dialog on top of the current widget, which allows the user to input new data and add it to the application.
+                AddDialogWidget.show(context);
+              },
+              tooltip: 'showDailog',
+              icon: const Icon(Icons.add),
+            ),
+          ),
           IconButton(
-            onPressed: () {
-              // Display a dialog on top of the current widget, which allows the user to input new data and add it to the application.
-              AddDialogWidget.show(context);
-            },
-            tooltip: 'showDailog',
-            icon: const Icon(Icons.add),
-          )
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const TableHelp(),
+              ),
+            ),
+            tooltip: 'showInfo',
+            icon: const Icon(Icons.info),
+          ),
         ],
         title: Text(widget.title),
       ),
