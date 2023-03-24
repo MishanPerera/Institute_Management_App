@@ -66,18 +66,37 @@ class _ViewNoticeState extends State<ViewNotice> {
                     icon: Icon(CupertinoIcons.arrow_left,
                         color: Colors.white, size: 28),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        edit = !edit;
-                      });
-                      ;
-                    },
-                    icon: Icon(Icons.edit,
-                        color: edit
-                            ? Color.fromARGB(255, 7, 215, 56)
-                            : Colors.white,
-                        size: 28),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            edit = !edit;
+                          });
+                          ;
+                        },
+                        icon: Icon(Icons.edit,
+                            color: edit
+                                ? Color.fromARGB(255, 7, 215, 56)
+                                : Colors.white,
+                            size: 28),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            FirebaseFirestore.instance
+                                .collection("notices")
+                                .doc(widget.id)
+                                .delete()
+                                .then((value) => {
+                                      Navigator.pop(context),
+                                    });
+                          });
+                          ;
+                        },
+                        icon: Icon(Icons.delete, color: Colors.red, size: 28),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -181,6 +200,7 @@ class _ViewNoticeState extends State<ViewNotice> {
   Widget button() {
     return InkWell(
       onTap: () {
+        //calling firebase intance and getting the particular document
         FirebaseFirestore.instance.collection("notices").doc(widget.id).update({
           "heading": _headingController.text,
           "classType": classType,

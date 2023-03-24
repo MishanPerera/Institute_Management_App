@@ -84,6 +84,7 @@ class _noticeDisplayState extends State<noticeDisplay> {
             "Notices",
           ),
         ),
+        // StreamBuilder: whenever something is change on the page it will automatically update the app state
         body: StreamBuilder(
             stream: _stream,
             builder: (context, snapshot) {
