@@ -20,7 +20,7 @@ class noticeDisplay extends StatefulWidget {
 
 class _noticeDisplayState extends State<noticeDisplay> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final String email = "kavindu@gmail.com";
+  final String email = "devx@gmail.com";
   User? _user;
 
   double _opacity = 0.0;

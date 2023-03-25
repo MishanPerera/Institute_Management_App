@@ -22,9 +22,7 @@ class _AddInforWidgetState extends State<AddInforWidget> {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: const Color(0xff151e3d),
-      icon: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+      content: Container(
         padding: const EdgeInsets.all(2.0),
         margin: const EdgeInsets.all(2.0),
         child: Align(
