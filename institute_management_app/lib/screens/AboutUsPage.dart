@@ -11,11 +11,13 @@ class AboutUsPage extends StatelessWidget {
 
     final List<Developers> developers = [
       Developers('Ninura Jayasekara',
-          'I have been using Product A for the past year and I am extremely satisfied with it. The customer support is excellent and the product itself is top-quality. I highly recommend it to anyone in need of a reliable and efficient solution.'),
+          'I have been Conserve The Blue Application for the past year and I am extremely satisfied with it. The customer support is excellent and the product itself is top-quality. I highly recommend it to anyone in need of a reliable and efficient solution.'),
       Developers('Insaf Nilam',
-          'I was skeptical about Product B at first, but after using it for a few weeks I am pleasantly surprised. It is easy to use and customize, and it has saved me a lot of time and effort. I will definitely be using it again in the future.'),
+          'I was skeptical about Conserve The Blue Application  at first, but after using it for a few weeks I am pleasantly surprised. It is easy to use and customize, and it has saved me a lot of time and effort. I will definitely be using it again in the future.'),
       Developers('Mishan Kavindu',
-          'Product C exceeded my expectations. Not only is it energy efficient, but it is also environmentally friendly. I feel good about using it and will be recommending it to my friends and family.'),
+          'Conserve The Blue Application  exceeded my expectations. Not only is it energy efficient, but it is also environmentally friendly. I feel good about using it and will be recommending it to my friends and family.'),
+      Developers('Manuka Dahanayake',
+          'Conserve The Blue Application  exceeded my expectations. Not only is it energy efficient, but it is also environmentally friendly. I feel good about using it and will be recommending it to my friends and family.'),
     ];
 
     return Scaffold(
