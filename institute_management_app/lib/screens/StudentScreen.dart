@@ -1,3 +1,4 @@
+// ignore_for_file: file_names, unnecessary_nullable_for_final_variable_declarations
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -10,20 +11,17 @@ class StudentScreen extends StatefulWidget {
 }
 
 class _StudentScreenState extends State<StudentScreen> {
-  // text fields' controllers
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _gradeController = TextEditingController();
   final TextEditingController _streamController = TextEditingController();
-  final TextEditingController _contactNumberController = TextEditingController();
+  final TextEditingController _contactNumberController =
+      TextEditingController();
   final TextEditingController _gurdianController = TextEditingController();
 
   final CollectionReference _students =
       FirebaseFirestore.instance.collection('students');
 
-  // This function is triggered when the floatting button or one of the edit buttons is pressed
-  // Adding a product if no documentSnapshot is passed
-  // If documentSnapshot != null then update an existing product
   Future<void> _createOrUpdate([DocumentSnapshot? documentSnapshot]) async {
     String action = 'create';
     if (documentSnapshot != null) {
@@ -45,7 +43,6 @@ class _StudentScreenState extends State<StudentScreen> {
                 top: 20,
                 left: 20,
                 right: 20,
-                // prevent the soft keyboard from covering text fields
                 bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -75,7 +72,6 @@ class _StudentScreenState extends State<StudentScreen> {
                   controller: _gurdianController,
                   decoration: const InputDecoration(labelText: 'Guardian Name'),
                 ),
-               
                 const SizedBox(
                   height: 20,
                 ),
@@ -85,32 +81,45 @@ class _StudentScreenState extends State<StudentScreen> {
                     final String? name = _nameController.text;
                     final String? email = _emailController.text;
                     final String? grade = _gradeController.text;
-                    final String? stream= _streamController.text;
+                    final String? stream = _streamController.text;
                     final String? contact = _contactNumberController.text;
                     final String? gurdian = _gurdianController.text;
-                    
-                    if (name != null && email != null && grade != null && stream != null && contact != null && gurdian != null  ) {
+
+                    if (name != null &&
+                        email != null &&
+                        grade != null &&
+                        stream != null &&
+                        contact != null &&
+                        gurdian != null) {
                       if (action == 'create') {
-                        // Persist a new product to Firestore
-                        await _students.add({"name": name, "email": email, "grade":grade, "stream":stream, "contactno":contact, "gurdian":gurdian});
+                        await _students.add({
+                          "name": name,
+                          "email": email,
+                          "grade": grade,
+                          "stream": stream,
+                          "contactno": contact,
+                          "gurdian": gurdian
+                        });
                       }
 
                       if (action == 'update') {
-                        // Update the product
-                        await _students
-                            .doc(documentSnapshot!.id)
-                            .update({"name": name, "email": email, "grade":grade, "stream":stream, "contactno":contact, "gurdian":gurdian});
+                        await _students.doc(documentSnapshot!.id).update({
+                          "name": name,
+                          "email": email,
+                          "grade": grade,
+                          "stream": stream,
+                          "contactno": contact,
+                          "gurdian": gurdian
+                        });
                       }
 
-                      // Clear the text fields
                       _nameController.text = '';
-                   _emailController.text = '';
-                   _gradeController.text = '';
-                   _streamController.text = '';
+                      _emailController.text = '';
+                      _gradeController.text = '';
+                      _streamController.text = '';
                       _contactNumberController.text = '';
                       _gurdianController.text = '';
 
-                      // Hide the bottom sheet
                       Navigator.of(context).pop();
                     }
                   },
@@ -121,8 +130,8 @@ class _StudentScreenState extends State<StudentScreen> {
         });
   }
 
-  // Deleteing a product by id
-  Future<void> _deleteProduct(String studentId) async {
+  // Deleteing a student by id
+  Future<void> _deleteStudent(String studentId) async {
     await _students.doc(studentId).delete();
 
     // Show a snackbar
@@ -136,7 +145,6 @@ class _StudentScreenState extends State<StudentScreen> {
       appBar: AppBar(
         title: const Text('Students'),
       ),
-      // Using StreamBuilder to display all products from Firestore in real-time
       body: StreamBuilder(
         stream: _students.snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
@@ -155,16 +163,14 @@ class _StudentScreenState extends State<StudentScreen> {
                       width: 100,
                       child: Row(
                         children: [
-                          // Press this button to edit a single product
                           IconButton(
                               icon: const Icon(Icons.edit),
                               onPressed: () =>
                                   _createOrUpdate(documentSnapshot)),
-                          // This icon button is used to delete a single product
                           IconButton(
                               icon: const Icon(Icons.delete),
                               onPressed: () =>
-                                  _deleteProduct(documentSnapshot.id)),
+                                  _deleteStudent(documentSnapshot.id)),
                         ],
                       ),
                     ),
@@ -179,7 +185,6 @@ class _StudentScreenState extends State<StudentScreen> {
           );
         },
       ),
-      // Add new product
       floatingActionButton: FloatingActionButton(
         onPressed: () => _createOrUpdate(),
         child: const Icon(Icons.add),
