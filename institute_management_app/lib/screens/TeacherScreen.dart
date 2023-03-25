@@ -8,6 +8,7 @@ import 'package:institute_management_app/models/Teacher.dart';
 import 'package:institute_management_app/services/techer_service.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+
 class TeacherScreen extends StatelessWidget {
   const TeacherScreen({Key? key}) : super(key: key);
 
@@ -44,20 +45,16 @@ class TeacherScreen extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-
                   TextFormField(
                     controller: _uidController,
                     decoration: const InputDecoration(
                       hintText: 'ID',
-                      
                     ),
                   ),
-
                   TextFormField(
                     controller: _nameController,
                     decoration: const InputDecoration(
                       hintText: 'Name',
-                      
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -66,8 +63,6 @@ class TeacherScreen extends StatelessWidget {
                     decoration: const InputDecoration(
                       hintText: 'Email',
                     ),
-                   
-                     
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
@@ -75,7 +70,6 @@ class TeacherScreen extends StatelessWidget {
                     decoration: const InputDecoration(
                       hintText: 'Subject',
                     ),
-                    
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
@@ -83,7 +77,6 @@ class TeacherScreen extends StatelessWidget {
                     decoration: const InputDecoration(
                       hintText: 'Contact Number',
                     ),
-                   
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
@@ -91,7 +84,6 @@ class TeacherScreen extends StatelessWidget {
                     decoration: const InputDecoration(
                       hintText: 'Grade',
                     ),
-                    
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
@@ -111,15 +103,13 @@ class TeacherScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   final teacher = Teacher(
-                    _uidController.text,
-                     _nameController.text,
-                     _emailController.text,
-                     _subjectController.text,
-                     _contactNumberController.text,
-                   _gradeController.text,
-                   _dobController.text 
-
-                  );
+                      _uidController.text,
+                      _nameController.text,
+                      _emailController.text,
+                      _subjectController.text,
+                      _contactNumberController.text,
+                      _gradeController.text,
+                      _dobController.text);
 
                   await TeacherService().createNewTeacher(teacher);
                   Navigator.pop(context);
@@ -133,67 +123,57 @@ class TeacherScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () => ZoomDrawer.of(context)!.toggle(),
+        backgroundColor: Colors.grey,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => ZoomDrawer.of(context)!.toggle(),
+          ),
+          actions: [
+            IconButton(
+              onPressed: showAddTeacherDialog,
+              tooltip: 'Add Teacher',
+              icon: const Icon(Icons.add),
+            ),
+            IconButton(
+              onPressed: handleLogout,
+              tooltip: 'Log out',
+              icon: const Icon(Icons.logout),
+            ),
+          ],
+          title: const Text("Teacher"),
         ),
-        actions: [
-          IconButton(
-            onPressed: showAddTeacherDialog,
-            tooltip: 'Add Teacher',
-            icon: const Icon(Icons.add),
-          ),
-          IconButton(
-            onPressed: handleLogout,
-            tooltip: 'Log out',
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-        title: const Text("Teacher"),
-      ),
+        body: StreamBuilder<List<Teacher>>(
+          stream: TeacherService().listTeachers(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            }
 
-
-
-      body: 
-        StreamBuilder<List<Teacher>>(
-  stream:TeacherService().listTeachers(),
-  builder: (context, snapshot) {
-    if (snapshot.hasError) {
-      return Text('Error: ${snapshot.error}');
-    }
-
-    switch (snapshot.connectionState) {
-      case ConnectionState.waiting:
-        return CircularProgressIndicator();
-      default:
-        return ListView.builder(
-          itemCount: snapshot.data?.length,
-          itemBuilder: (context, index) {
-            Teacher teacher = snapshot.data![index];
-            return ListTile(
-              title: Text(teacher.name),
-              subtitle: Text(teacher.subject),
-              trailing: IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () async {
-                  await TeacherService().deleteTeacher(teacher.uid);
-                },
-                tooltip: 'Delete Teacher',
-          
-              ),
-            );
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const CircularProgressIndicator();
+              default:
+                return ListView.builder(
+                  itemCount: snapshot.data?.length,
+                  itemBuilder: (context, index) {
+                    Teacher teacher = snapshot.data![index];
+                    return ListTile(
+                      title: Text(teacher.name),
+                      subtitle: Text(teacher.subject),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () async {
+                          await TeacherService().deleteTeacher(teacher.uid);
+                        },
+                        tooltip: 'Delete Teacher',
+                      ),
+                    );
+                  },
+                );
+            }
           },
-        );
-    }
-  },
-)
-        
-      );
-
-    
-   
+        ));
   }
 
   void signOut() {
@@ -201,7 +181,4 @@ class TeacherScreen extends StatelessWidget {
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
     navigatorKey.currentState!.pushReplacementNamed('/login');
   }
-
-
-  
 }

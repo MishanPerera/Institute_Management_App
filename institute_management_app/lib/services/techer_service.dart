@@ -1,9 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:logger/logger.dart';
 import '../models/Teacher.dart';
+
+final logger = Logger(
+  level: Level.debug,
+  printer: PrettyPrinter(),
+);
 
 class TeacherService {
   CollectionReference teachersCollection =
-      FirebaseFirestore.instance.collection("Teachers");
+      FirebaseFirestore.instance.collection("teachers");
 
   Future<DocumentReference> createNewTeacher(Teacher teacher) async {
     return await teachersCollection.add({
@@ -46,8 +52,15 @@ class TeacherService {
     }).toList();
   }
 
-  Stream<List<Teacher>> listTeachers() {
-    return teachersCollection.snapshots().map(teacherFromFirestore);
+  Stream<List<Teacher>> listTeachers() async* {
+    try {
+      yield* teachersCollection
+          .snapshots()
+          .map((snapshot) => teacherFromFirestore(snapshot));
+    } catch (e) {
+      logger.e('Error fetching Teacher Details: $e');
+      yield [];
+    }
   }
 
   // Future<List<Teacher>> getTeachers() {
