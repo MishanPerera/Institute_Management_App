@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Teacher {
   final String uid;
   final String name;
@@ -18,4 +20,17 @@ class Teacher {
     this.grade,
     this.dateOfBirth,
   );
+
+  factory Teacher.fromSnapshot(
+      QueryDocumentSnapshot<Map<String, dynamic>> snapshot) {
+    return Teacher(
+      snapshot.id,
+      snapshot['name'],
+      snapshot['email'],
+      snapshot['subject'],
+      snapshot['contactNumber'],
+      snapshot['grade'],
+      snapshot['dateOfBirth'],
+    );
+  }
 }

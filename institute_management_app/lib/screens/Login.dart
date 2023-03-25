@@ -1,12 +1,18 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_final_fields
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_final_fields, avoid_print, prefer_interpolation_to_compose_strings
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:institute_management_app/screens/main_page.dart';
+import 'package:logger/logger.dart';
 // import 'package:flutter/screens/item.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import 'ResetPassword.dart';
 import 'Signup.dart';
+
+final logger = Logger(
+  level: Level.debug,
+  printer: PrettyPrinter(),
+);
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -17,6 +23,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
+
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
 
@@ -49,7 +56,34 @@ class _LoginState extends State<Login> {
                 child: Column(
                   children: <Widget>[
                     // LogoWidget('images/logo.jpg'), // add custom image here to run
-                    SizedBox(
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    const Icon(
+                      Icons.lock,
+                      size: 100,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Welcome Back',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(color: const Color(0xfffff8e8)),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Login to your account',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: const Color(0xfffff8e8)),
+                    ),
+                    const SizedBox(
                       height: 50,
                     ),
                     reusableTextField("Email Address", Icons.mail_outline,
@@ -72,13 +106,13 @@ class _LoginState extends State<Login> {
                                 email: _emailTextController.text,
                                 password: _passwordTextController.text)
                             .then((value) {
-                          print("Logged in");
+                          logger.i("Logged in");
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => MainPage()));
                         }).onError((error, stackTrace) {
-                          print("Error" + error.toString());
+                          logger.e("Error: $error");
                         });
                       }
                     }),

@@ -1,7 +1,5 @@
 // import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:institute_management_app/models/Teacher.dart';
 import 'package:institute_management_app/models/time_table_model.dart';
 import 'package:logger/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -60,7 +58,7 @@ Stream<List<TimeTable>> getTimeTables() async* {
             .map((doc) => TimeTable.fromJson(doc.data()))
             .toList());
   } catch (e) {
-    logger.e('Error fetching favourites: $e');
+    logger.e('Error fetching Time Tables: $e');
     yield [];
   }
 }

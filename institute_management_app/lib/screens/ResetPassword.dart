@@ -50,7 +50,34 @@ class _ResetPasswordState extends State<ResetPassword> {
               child: Column(
                 children: <Widget>[
                   const SizedBox(
+                    height: 60,
+                  ),
+                  const Icon(
+                    Icons.lock,
+                    size: 100,
+                  ),
+                  const SizedBox(
                     height: 20,
+                  ),
+                  Text(
+                    'Reset Password',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineMedium!
+                        .copyWith(color: const Color(0xfffff8e8)),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'For your Existing Account',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: const Color(0xfffff8e8)),
+                  ),
+                  const SizedBox(
+                    height: 50,
                   ),
                   reusableTextField("Email Address", Icons.mail_outline, false,
                       _emailTextController),
