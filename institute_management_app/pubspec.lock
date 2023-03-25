@@ -105,8 +105,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.0"
-<<<<<<< HEAD
-=======
   convert:
     dependency: transitive
     description:
@@ -115,7 +113,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
->>>>>>> e0a740856dad0fe87bb4aeb335f56f6a7fac548e
   crypto:
     dependency: transitive
     description:
@@ -233,16 +230,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-<<<<<<< HEAD
-  flutter_custom_dialog:
-    dependency: "direct main"
-    description:
-      name: flutter_custom_dialog
-      sha256: a30febb3e04f90e848296a313868be3fe490a42ae9cbc6afe0f1f64ad4390b93
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.0"
-=======
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -251,7 +238,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.0"
->>>>>>> e0a740856dad0fe87bb4aeb335f56f6a7fac548e
   flutter_lints:
     dependency: "direct dev"
     description:
