@@ -92,9 +92,9 @@ class _TeacherScreenState extends State<TeacherScreen> {
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return Center(
-                      child: CircularProgressIndicator(color: Colors.white,)
-                      
-                    );
+                        child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ));
                   }
 
                   List<Teacher> teachers = snapshot.data!;

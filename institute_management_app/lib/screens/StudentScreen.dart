@@ -11,12 +11,12 @@ class StudentScreen extends StatefulWidget {
 }
 
 class _StudentScreenState extends State<StudentScreen> {
-
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _gradeController = TextEditingController();
   final TextEditingController _streamController = TextEditingController();
-  final TextEditingController _contactNumberController = TextEditingController();
+  final TextEditingController _contactNumberController =
+      TextEditingController();
   final TextEditingController _gurdianController = TextEditingController();
 
   final CollectionReference _students =
@@ -43,7 +43,6 @@ class _StudentScreenState extends State<StudentScreen> {
                 top: 20,
                 left: 20,
                 right: 20,
-                
                 bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -73,7 +72,6 @@ class _StudentScreenState extends State<StudentScreen> {
                   controller: _gurdianController,
                   decoration: const InputDecoration(labelText: 'Guardian Name'),
                 ),
-               
                 const SizedBox(
                   height: 20,
                 ),
@@ -83,25 +81,42 @@ class _StudentScreenState extends State<StudentScreen> {
                     final String? name = _nameController.text;
                     final String? email = _emailController.text;
                     final String? grade = _gradeController.text;
-                    final String? stream= _streamController.text;
+                    final String? stream = _streamController.text;
                     final String? contact = _contactNumberController.text;
                     final String? gurdian = _gurdianController.text;
-                    
-                    if (name != null && email != null && grade != null && stream != null && contact != null && gurdian != null  ) {
+
+                    if (name != null &&
+                        email != null &&
+                        grade != null &&
+                        stream != null &&
+                        contact != null &&
+                        gurdian != null) {
                       if (action == 'create') {
-                        await _students.add({"name": name, "email": email, "grade":grade, "stream":stream, "contactno":contact, "gurdian":gurdian});
+                        await _students.add({
+                          "name": name,
+                          "email": email,
+                          "grade": grade,
+                          "stream": stream,
+                          "contactno": contact,
+                          "gurdian": gurdian
+                        });
                       }
 
                       if (action == 'update') {
-                        await _students
-                            .doc(documentSnapshot!.id)
-                            .update({"name": name, "email": email, "grade":grade, "stream":stream, "contactno":contact, "gurdian":gurdian});
+                        await _students.doc(documentSnapshot!.id).update({
+                          "name": name,
+                          "email": email,
+                          "grade": grade,
+                          "stream": stream,
+                          "contactno": contact,
+                          "gurdian": gurdian
+                        });
                       }
 
                       _nameController.text = '';
-                   _emailController.text = '';
-                   _gradeController.text = '';
-                   _streamController.text = '';
+                      _emailController.text = '';
+                      _gradeController.text = '';
+                      _streamController.text = '';
                       _contactNumberController.text = '';
                       _gurdianController.text = '';
 
