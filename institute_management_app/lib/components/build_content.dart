@@ -21,7 +21,7 @@ class BuildContent extends StatefulWidget {
 
 class _BuildContentState extends State<BuildContent> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final String email = "insafnilam.2000@gmail.com";
+  final String email = "devx@gmail.com";
   User? _user;
 
   @override
