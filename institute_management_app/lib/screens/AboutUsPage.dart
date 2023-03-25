@@ -43,7 +43,7 @@ class AboutUsPage extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Image.asset(
-                      'assets/about.png',
+                      'assets/About.png',
                       width: 200,
                       height: 200,
                     ),

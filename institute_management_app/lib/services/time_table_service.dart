@@ -58,7 +58,7 @@ Stream<List<TimeTable>> getTimeTables() async* {
             .map((doc) => TimeTable.fromJson(doc.data()))
             .toList());
   } catch (e) {
-    logger.e('Error fetching favourites: $e');
+    logger.e('Error fetching Time Tables: $e');
     yield [];
   }
 }
