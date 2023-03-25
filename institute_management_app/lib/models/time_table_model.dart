@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class TimeTable {
   String id;
   String name;
@@ -35,5 +37,18 @@ class TimeTable {
         days: List<String>.from(json['days']),
         startTime: json['startTime'],
         endTime: json['endTime']);
+  }
+
+  factory TimeTable.fromSnapshot(
+      QueryDocumentSnapshot<Map<String, dynamic>> snapshot) {
+    return TimeTable(
+      id: snapshot.id,
+      name: snapshot['name'],
+      subject: snapshot['subject'],
+      grade: snapshot['grade'],
+      days: List<String>.from(snapshot['days']),
+      startTime: snapshot['startTime'],
+      endTime: snapshot['endTime'],
+    );
   }
 }

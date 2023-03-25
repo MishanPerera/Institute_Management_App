@@ -2,6 +2,12 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:institute_management_app/models/Teacher.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger(
+  level: Level.debug,
+  printer: PrettyPrinter(),
+);
 
 class TeacherService {
   final CollectionReference _teachersCollection =
@@ -73,4 +79,15 @@ class TeacherService {
       print(e);
     }
   }
+
+  // Future<List<Teacher>> getTeachers() {
+  //   return teachersCollection.get().then((querySnapshot) {
+  //     List<Teacher> teachersList = [];
+  //     for (var doc in querySnapshot.docs) {
+  //       teachersList.add(
+  //           teacherFromFirestore(doc as QuerySnapshot<Object?>) as Teacher);
+  //     }
+  //     return teachersList;
+  //   });
+  // }
 }

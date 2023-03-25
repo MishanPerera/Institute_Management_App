@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use, prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutUsPage extends StatelessWidget {
@@ -9,19 +10,24 @@ class AboutUsPage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     final List<Developers> developers = [
-      Developers('Ninura Jayasekara', 'I have been using Product A for the past year and I am extremely satisfied with it. The customer support is excellent and the product itself is top-quality. I highly recommend it to anyone in need of a reliable and efficient solution.'),
-      Developers('Insaf Nilam', 'I was skeptical about Product B at first, but after using it for a few weeks I am pleasantly surprised. It is easy to use and customize, and it has saved me a lot of time and effort. I will definitely be using it again in the future.'),
-      Developers('Mishan Kavindu', 'Product C exceeded my expectations. Not only is it energy efficient, but it is also environmentally friendly. I feel good about using it and will be recommending it to my friends and family.'),
+      Developers('Ninura Jayasekara',
+          'I have been using Product A for the past year and I am extremely satisfied with it. The customer support is excellent and the product itself is top-quality. I highly recommend it to anyone in need of a reliable and efficient solution.'),
+      Developers('Insaf Nilam',
+          'I was skeptical about Product B at first, but after using it for a few weeks I am pleasantly surprised. It is easy to use and customize, and it has saved me a lot of time and effort. I will definitely be using it again in the future.'),
+      Developers('Mishan Kavindu',
+          'Product C exceeded my expectations. Not only is it energy efficient, but it is also environmentally friendly. I feel good about using it and will be recommending it to my friends and family.'),
     ];
 
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () => ZoomDrawer.of(context)!.toggle()),
           title: Text('About Us'),
         ),
-        body:SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Column(
             children: [
-
               //Name and Logo
               Container(
                 width: screenWidth,
@@ -37,7 +43,7 @@ class AboutUsPage extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Image.asset(
-                      'assets/About.png',
+                      'assets/about.png',
                       width: 200,
                       height: 200,
                     ),
@@ -52,8 +58,7 @@ class AboutUsPage extends StatelessWidget {
                   child: Text(
                     'We offer a wide range of functionalities to meet the needs of our customers.',
                     style: Theme.of(context).textTheme.bodyText2,
-                  )
-              ),
+                  )),
 
               //statement and values
               Container(
@@ -79,7 +84,8 @@ class AboutUsPage extends StatelessWidget {
                       SizedBox(height: 8),
                       ListTile(
                         leading: Icon(Icons.check),
-                        title: Text('Our first objective is to satisfy our customers.'),
+                        title: Text(
+                            'Our first objective is to satisfy our customers.'),
                       ),
                       ListTile(
                         leading: Icon(Icons.check),
@@ -87,17 +93,12 @@ class AboutUsPage extends StatelessWidget {
                       ),
                       ListTile(
                         leading: Icon(Icons.check),
-                        title: Text('We prioritize being truthful and ethical in everything we do.'),
+                        title: Text(
+                            'We prioritize being truthful and ethical in everything we do.'),
                       ),
                     ],
-                  )
-              ),
+                  )),
 
-              
-
-          
-
-             
               //Testimonials or reviews
               Container(
                 width: screenWidth,
@@ -163,8 +164,7 @@ class AboutUsPage extends StatelessWidget {
                         title: Text('info@devx.com'),
                       ),
                     ],
-                  )
-              ),
+                  )),
 
               //social media
               Container(
@@ -181,32 +181,30 @@ class AboutUsPage extends StatelessWidget {
                       ListTile(
                         leading: Icon(Icons.link),
                         title: Text('Facebook'),
-                        onTap: () => launchUrl(Uri.parse('https://www.facebook.com/')),
+                        onTap: () =>
+                            launchUrl(Uri.parse('https://www.facebook.com/')),
                       ),
                       ListTile(
                         leading: Icon(Icons.link),
                         title: Text('Twitter'),
-                        onTap: () => launchUrl(Uri.parse('https://www.twitter.com/')),
+                        onTap: () =>
+                            launchUrl(Uri.parse('https://www.twitter.com/')),
                       ),
                       ListTile(
                         leading: Icon(Icons.link),
                         title: Text('Instagram'),
-                        onTap: () => launchUrl(Uri.parse('https://www.instagram.com/')),
+                        onTap: () =>
+                            launchUrl(Uri.parse('https://www.instagram.com/')),
                       ),
                     ],
-                  )
-              ),
-
-
+                  )),
             ],
           ),
-        )
-
-    );
+        ));
   }
 }
 
-class Developers{
+class Developers {
   final String author;
   final String text;
 

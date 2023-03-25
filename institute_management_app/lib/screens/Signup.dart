@@ -2,9 +2,14 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:logger/logger.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import 'Login.dart';
+
+final logger = Logger(
+  level: Level.debug,
+  printer: PrettyPrinter(),
+);
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -14,9 +19,9 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _passwordTextController = TextEditingController();
-  TextEditingController _usernameTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _usernameTextController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -34,8 +39,8 @@ class _SignUpState extends State<SignUp> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
-          "Sign up",
+        title: const Text(
+          "Sign Up",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
       ),
@@ -55,22 +60,44 @@ class _SignUpState extends State<SignUp> {
               padding: const EdgeInsets.only(left: 20, right: 20, top: 100),
               child: Column(
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  const Icon(
+                    Icons.lock,
+                    size: 100,
+                  ),
+                  const SizedBox(
                     height: 20,
                   ),
-                  // reusableTextField("Username", Icons.person_outline, false,
-                  //     _usernameTextController),
-                  SizedBox(
+                  Text(
+                    'Register',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineMedium!
+                        .copyWith(color: const Color(0xfffff8e8)),
+                  ),
+                  const SizedBox(
                     height: 20,
+                  ),
+                  Text(
+                    'Create your account',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: const Color(0xfffff8e8)),
+                  ),
+                  const SizedBox(
+                    height: 50,
                   ),
                   reusableTextField("Email Address", Icons.mail_outline, false,
                       _emailTextController),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   reusableTextField("Password", Icons.lock_outline, true,
                       _passwordTextController),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   firebaseUIButton(context, "Sign Up", () {
@@ -82,11 +109,13 @@ class _SignUpState extends State<SignUp> {
                               email: _emailTextController.text,
                               password: _passwordTextController.text)
                           .then((value) {
-                        print("Account created");
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Login()));
+                        logger.i("Account created");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Login()));
                       }).onError((error, stackTrace) {
-                        print("Error" + error.toString());
+                        logger.e("Error: $error");
                       });
                     }
                   })
