@@ -7,7 +7,7 @@ import 'package:institute_management_app/screens/menu_page.dart';
 import 'package:institute_management_app/screens/time_table_screen.dart';
 import 'package:institute_management_app/screens/notice_screen.dart';
 import 'package:institute_management_app/screens/TeacherScreen.dart';
-import 'package:institute_management_app/screens/sample_page_3.dart';
+import 'package:institute_management_app/screens/StudentScreen.dart';
 import 'package:institute_management_app/screens/AboutUsPage.dart';
 import 'package:institute_management_app/screens/sample_page_5.dart';
 
@@ -51,8 +51,8 @@ class _MainPageState extends State<MainPage> {
         return const Notice();
       case MenuItems.teacher:
         return const TeacherScreen();
-      case MenuItems.help:
-        return const SamplePage3();
+      case MenuItems.student:
+        return const StudentScreen();
       case MenuItems.aboutUs:
         return AboutUsPage();
       default:

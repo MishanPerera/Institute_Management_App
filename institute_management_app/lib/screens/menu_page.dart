@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:institute_management_app/models/Student.dart';
 import 'package:institute_management_app/models/menu_page_model.dart';
 
 import 'package:quickalert/quickalert.dart';
@@ -10,7 +11,7 @@ class MenuItems {
   static const timeTable = MenuItem('Time Table', Icons.table_chart_outlined);
   static const notice = MenuItem('Notice', Icons.card_giftcard);
   static const teacher = MenuItem('Teacher', Icons.person);
-  static const help = MenuItem('Help', Icons.help);
+  static const student = MenuItem('Student', Icons.person_2);
   static const aboutUs = MenuItem('About Us', Icons.info_outline);
   static const rateUs = MenuItem('Rate Us', Icons.star_border);
 
@@ -18,7 +19,7 @@ class MenuItems {
     timeTable,
     notice,
     teacher,
-    help,
+    student,
     aboutUs,
     rateUs
   ];
