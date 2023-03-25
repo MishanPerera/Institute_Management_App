@@ -50,7 +50,7 @@ class _MainPageState extends State<MainPage> {
       case MenuItems.notice:
         return const Notice();
       case MenuItems.teacher:
-        return const TeacherScreen();
+        return TeacherScreen();
       case MenuItems.help:
         return const SamplePage3();
       case MenuItems.aboutUs:
