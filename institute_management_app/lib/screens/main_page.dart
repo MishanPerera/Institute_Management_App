@@ -9,7 +9,7 @@ import 'package:institute_management_app/screens/noticeDisplayScreen.dart';
 import 'package:institute_management_app/screens/TeacherScreen.dart';
 import 'package:institute_management_app/screens/StudentScreen.dart';
 import 'package:institute_management_app/screens/AboutUsPage.dart';
-import 'package:institute_management_app/screens/sample_page_5.dart';
+import 'package:institute_management_app/screens/StudentScreen.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -51,12 +51,10 @@ class _MainPageState extends State<MainPage> {
         return const noticeDisplay();
       case MenuItems.teacher:
         return TeacherScreen();
-      case MenuItems.student:
-        return const StudentScreen();
       case MenuItems.aboutUs:
         return AboutUsPage();
       default:
-        return const SamplePage5();
+        return StudentScreen();
     }
   }
 }
