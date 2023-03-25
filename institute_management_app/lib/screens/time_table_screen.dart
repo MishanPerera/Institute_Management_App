@@ -8,9 +8,6 @@ import 'package:institute_management_app/reusable_widgets/label_heading_widget.d
 import 'package:institute_management_app/screens/filtered_table_screen.dart';
 import 'package:institute_management_app/screens/time_table_help.dart';
 import 'package:institute_management_app/services/time_table_service.dart';
-import 'package:quickalert/quickalert.dart';
-
-import '../main.dart';
 
 class TimeTableScreen extends StatefulWidget {
   const TimeTableScreen({super.key, required this.title});
@@ -22,7 +19,7 @@ class TimeTableScreen extends StatefulWidget {
 
 class _TimeTableScreenState extends State<TimeTableScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final String email = "insafnilam.2000@gmail.com";
+  final String email = "devx@gmail.com";
   User? _user;
 
   final _scrollController = ScrollController();
